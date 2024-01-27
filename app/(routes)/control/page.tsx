@@ -29,12 +29,13 @@ export default function ControlPage() {
       const response = await GET(`/health/users`);
       const data = await response.json();
 
-      const sortedData = data.sort((a: any, b: any) => {
-        if (a.week > 40) {
-          return -1;
-        }
-        return a.week - b.week;
-      });
+      const older = data.filter((d: any) => d.week > 40);
+      const newer = data
+        .filter((d: any) => d.week <= 40)
+        .sort((a: any, b: any) => {
+          return a.week - b.week;
+        });
+      const sortedData = [...older, ...newer];
 
       setUsersByWeek({
         labels: sortedData.map((d: any) => `Week ${d.week}`),
