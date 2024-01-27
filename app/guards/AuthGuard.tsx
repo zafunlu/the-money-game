@@ -13,8 +13,6 @@ export function AuthenticatedGuard({ children }: AuthenticatedRouteProps) {
   const router = useRouter();
   const { showSnackbar } = useSnackbar();
 
-  console.log(isLoading);
-
   useEffect(() => {
     if (
       isLoading === ThunkStatus.Error ||
