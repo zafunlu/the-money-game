@@ -26,9 +26,9 @@ export function UpdateCustomerDialog() {
 
   const [isDisabled, setIsDisabled] = useState(false);
   const [formData, setFormData] = useState({
-    customerFirstName: customer.first_name,
-    customerLastName: customer.last_name,
-    customerPin: customer.pin,
+    customerFirstName: customer?.first_name ?? "",
+    customerLastName: customer?.last_name ?? "",
+    customerPin: customer?.pin ?? "",
   });
   const [formErrors, setFormErrors] = useState({
     customerFirstName: "",
@@ -82,11 +82,11 @@ export function UpdateCustomerDialog() {
     };
 
     try {
-      const response = await PUT(`/customers/${customer.id}`, payload);
+      const response = await PUT(`/customers/${customer?.id}`, payload);
 
       if (response.ok) {
         closeDialog();
-        dispatch(fetchCustomers(bank.id));
+        dispatch(fetchCustomers(bank?.id ?? ""));
         showSnackbar("Successfully updated the customer");
       } else {
         const { message } = await response.json();

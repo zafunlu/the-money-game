@@ -35,7 +35,7 @@ export function AnnouncementList() {
     if (!announcements) {
       fetchAnnouncements();
     }
-  }, []);
+  }, [announcements, dispatch]);
 
   useEffect(() => {
     if (announcements) {

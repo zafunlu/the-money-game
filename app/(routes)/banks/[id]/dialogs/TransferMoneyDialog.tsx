@@ -26,7 +26,7 @@ export function TransferMoneyDialog() {
 
   const [formData, setFormData] = useState({
     transactionType: "",
-    accountId: customer.accounts[0].id,
+    accountId: customer?.accounts[0].id ?? 0,
     amount: "",
     description: "",
   });
@@ -105,14 +105,14 @@ export function TransferMoneyDialog() {
         closeTransferMoneyDialog();
 
         if (isLoggedIn) {
-          dispatch(fetchCustomers(customer.bank_id));
+          dispatch(fetchCustomers(customer!.bank_id));
           showSnackbar(
             `Successfully ${isWithdraw ? "withdrew" : "deposited"} ${formatCurrency(
               parseFloat(formData.amount)
             )} ${isWithdraw ? "from" : "into"} the account`
           );
         } else {
-          dispatch(fetchCustomer(customer.id));
+          dispatch(fetchCustomer(customer!.id));
           showSnackbar(
             "Successfully created a request. Please wait while your bank approves or declines this transaction"
           );
@@ -161,8 +161,8 @@ export function TransferMoneyDialog() {
           <div className="form-field">
             <label htmlFor="select_account">Select Account</label>
             <select id="select_account" name="accountId" disabled>
-              <option value={customer.accounts[0].id}>
-                {customer.accounts[0].name} - {formatCurrency(customer.accounts[0].balance)}
+              <option value={customer?.accounts[0].id}>
+                {customer?.accounts[0].name} - {formatCurrency(customer?.accounts[0].balance ?? 0)}
               </option>
             </select>
           </div>

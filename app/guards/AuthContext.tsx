@@ -57,8 +57,8 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
     (user: any, token: string) => {
       localStorage.setItem("auth_token", token);
       localStorage.setItem("current_user", user.id);
-      dispatch(usersActions.setUser(user));
       setIsLoggedIn(true);
+      dispatch(usersActions.setUser(user));
       showSnackbar(`You are now signed in as @${user.username}`);
       router.push("/dashboard");
     },
@@ -73,7 +73,7 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
     if (isLoggedIn && !currentUser) {
       dispatch(fetchCurrentUser());
     }
-  }, [isLoggedIn, currentUser, dispatch]);
+  }, [isLoggedIn, currentUser, dispatch, isLoading]);
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, isLoading, signin, signout }}>

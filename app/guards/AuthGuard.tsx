@@ -9,18 +9,25 @@ import { ThunkStatus } from "@/lib/thunk";
 type AuthenticatedRouteProps = { children: React.ReactNode };
 
 export function AuthenticatedGuard({ children }: AuthenticatedRouteProps) {
-  const { isLoading, isLoggedIn } = useAuth();
+  const { isLoading, isLoggedIn, signout } = useAuth();
   const router = useRouter();
   const { showSnackbar } = useSnackbar();
 
+  console.log(isLoading);
+
   useEffect(() => {
-    if (isLoading !== ThunkStatus.Idle && isLoading !== ThunkStatus.Loading && !isLoggedIn) {
+    if (
+      isLoading === ThunkStatus.Error ||
+      (isLoading !== ThunkStatus.Idle && !isLoading) ||
+      (isLoading !== ThunkStatus.Loading && !isLoggedIn)
+    ) {
+      signout();
       router.push("/signin");
       showSnackbar("You need to be signed in to do that");
     }
-  }, [isLoading, isLoggedIn, router, showSnackbar]);
+  }, [isLoading, isLoggedIn, router, signout, showSnackbar]);
 
-  if (isLoggedIn) {
+  if (isLoggedIn && isLoading !== ThunkStatus.Error) {
     return children;
   }
 

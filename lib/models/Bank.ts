@@ -6,7 +6,7 @@ export type Bank = {
   description: string;
   slug: string;
   user_id: number;
-  user: User;
+  owner: User;
   created_at: Date | string;
   updated_at: Date | string;
 };

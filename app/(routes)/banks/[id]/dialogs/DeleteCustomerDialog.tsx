@@ -26,12 +26,12 @@ export function DeleteCustomerDialog() {
     setIsLoading(true);
 
     try {
-      const response = await DELETE(`/customers/${customer.id}`);
+      const response = await DELETE(`/customers/${customer!.id}`);
 
       if (response.ok) {
         closeDialog();
-        showSnackbar(`Successfully removed ${customer.first_name} from the bank`);
-        dispatch(fetchCustomers(bank.id));
+        showSnackbar(`Successfully removed ${customer!.first_name} from the bank`);
+        dispatch(fetchCustomers(bank!.id));
       } else {
         // snackbar
       }

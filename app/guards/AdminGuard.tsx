@@ -7,6 +7,7 @@ import { selectCurrentUser } from "@/lib/features/users/usersSlice";
 import { useAppSelector } from "@/lib/hooks";
 import { useSnackbar } from "../components/snackbar/snackbar-context";
 import { UserRole } from "@/lib/models/User";
+import { ThunkStatus } from "@/lib/thunk";
 
 type AdminGuardProps = { children: React.ReactNode };
 
@@ -17,7 +18,11 @@ export function AdminGuard({ children }: AdminGuardProps) {
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoading && !isLoggedIn) {
+    if (
+      isLoading === ThunkStatus.Error ||
+      (isLoading !== ThunkStatus.Idle && !isLoading) ||
+      (isLoading !== ThunkStatus.Loading && !isLoggedIn)
+    ) {
       router.push("/signin");
       showSnackbar("You need to be signed in first");
     } else if (user && user.role !== UserRole.Admin) {

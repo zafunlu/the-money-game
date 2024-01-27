@@ -73,7 +73,7 @@ export function AddCustomerDialog() {
 
     try {
       const payload = {
-        bank_id: bank.id,
+        bank_id: bank!.id,
         first_name: formData.firstName,
         last_name: formData.lastName,
         pin: formData.pin,
@@ -82,7 +82,7 @@ export function AddCustomerDialog() {
 
       if (response.ok) {
         closeDialog();
-        dispatch(fetchCustomers(bank.id));
+        dispatch(fetchCustomers(bank!.id));
       } else {
         const { message } = await response.json();
         showSnackbar(message);

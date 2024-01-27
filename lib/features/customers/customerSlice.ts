@@ -64,12 +64,23 @@ const customerSlice = createSlice({
 
 export const fetchCustomers = createAsyncThunk("customers/all", async (bankId: string | number) => {
   const response = await GET(`/banks/${bankId}/customers`);
+
+  if (!response.ok) {
+    throw new Error();
+  }
+
   return response.json();
 });
+
 export const fetchCustomer = createAsyncThunk(
   "customers/find",
   async (customerId: string | number) => {
     const response = await GET(`/customers/${customerId}`);
+
+    if (!response.ok) {
+      throw new Error();
+    }
+
     return response.json();
   }
 );

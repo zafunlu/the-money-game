@@ -23,7 +23,7 @@ export function EmployeeList() {
   return (
     <ul className="flex gap-2 flex-wrap">
       <li>
-        <ProfilePreview className="w-10 h-10" user={bank.owner} />
+        <ProfilePreview className="w-10 h-10" user={bank!.owner} />
       </li>
       {employeesStatus === ThunkStatus.Loading || employeesStatus === ThunkStatus.Idle ? (
         <></>

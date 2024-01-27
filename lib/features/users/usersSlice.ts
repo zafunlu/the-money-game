@@ -41,6 +41,12 @@ export const { actions: usersActions, reducer: usersReducer } = usersSlice;
 
 export const fetchCurrentUser = createAsyncThunk<User>("users/current", async () => {
   const response = await GET(`/users`);
+
+  if (!response.ok) {
+    const { message } = await response.json();
+    throw message;
+  }
+
   return response.json();
 });
 
