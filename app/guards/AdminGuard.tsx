@@ -20,8 +20,7 @@ export function AdminGuard({ children }: AdminGuardProps) {
   useEffect(() => {
     if (
       isLoading === ThunkStatus.Error ||
-      (isLoading !== ThunkStatus.Idle && !isLoading) ||
-      (isLoading !== ThunkStatus.Loading && !isLoggedIn)
+      (isLoading !== ThunkStatus.Idle && isLoading !== ThunkStatus.Loading && !isLoggedIn)
     ) {
       router.push("/signin");
       showSnackbar("You need to be signed in first");

@@ -16,8 +16,7 @@ export function AuthenticatedGuard({ children }: AuthenticatedRouteProps) {
   useEffect(() => {
     if (
       isLoading === ThunkStatus.Error ||
-      (isLoading !== ThunkStatus.Idle && !isLoading) ||
-      (isLoading !== ThunkStatus.Loading && !isLoggedIn)
+      (isLoading !== ThunkStatus.Idle && isLoading !== ThunkStatus.Loading && !isLoggedIn)
     ) {
       signout();
       router.push("/signin");
