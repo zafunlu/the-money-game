@@ -1,36 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Fun Banking
 
-## Getting Started
+Where Money Makes Cents
+Empowering families, teachers and organizations to raise financial wizards through interactive banking simulations.
 
-First, run the development server:
+<img width="892" alt="Screenshot 2024-01-27 at 10 04 44 AM" src="https://github.com/bytebury/fun-banking/assets/104793781/8bd26cf5-cfe5-45ff-bc9d-bcf04cc67b97">
 
-```bash
+# Getting Started
+
+This is the official code that runs https://fun-banking.com. If you're curious about how it works or would like to run your own version (for whatever reason).
+
+## Installation
+
+We use NextJS and get our packages from npm. So you'll need NodeJS installed locally to run the application. Assuming you have that installed, you can run the following commands to get started locally:
+
+```
+git clone https://github.com/bytebury/fun-banking.git
+cd fun-banking
+
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+That'll launch the application at `localhost:3000`.
