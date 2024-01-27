@@ -2,16 +2,20 @@
 
 import { useState } from "react";
 import { PreviewAnnouncement } from "./PreviewAnnouncement";
-import { POST } from "@/app/utils/http-client";
+import { POST, PUT } from "@/app/utils/http-client";
 import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { useRouter } from "next/navigation";
 
 export function NewAnnouncementForm({
   title,
   description,
+  action,
+  id,
 }: {
   title?: string;
   description?: string;
+  id?: string | number;
+  action?: "new" | "edit";
 }) {
   const router = useRouter();
   const { showSnackbar } = useSnackbar();
@@ -22,8 +26,32 @@ export function NewAnnouncementForm({
     setFormData((data) => ({ ...data, [name]: value ?? "" }));
   }
 
+  async function updateAnnouncement(event: any): Promise<void> {
+    event.preventDefault();
+
+    const payload = { ...formData, id };
+
+    try {
+      const response = await PUT(`/announcements/${id}`, payload);
+
+      if (response.ok) {
+        showSnackbar("Successfully updated your announcement");
+      } else {
+        const { message } = await response.json();
+        showSnackbar(message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   async function publishAnnouncement(event: any): Promise<void> {
     event.preventDefault();
+
+    if (action === "edit") {
+      await updateAnnouncement(event);
+      return;
+    }
 
     const payload = formData;
 
@@ -71,7 +99,11 @@ export function NewAnnouncementForm({
           ></textarea>
         </div>
         <div className="flex gap-2">
-          <input type="submit" value="Post Announcement" className="common filled" />
+          <input
+            type="submit"
+            value={`${action === "edit" ? "Update" : "Post"} Announcement`}
+            className="common filled"
+          />
           <input type="reset" value="Cancel" className="common ghost" />
         </div>
       </form>
