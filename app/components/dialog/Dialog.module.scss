@@ -1,0 +1,80 @@
+.dialog {
+  position: fixed;
+  z-index: 40;
+  background: #00000070;
+  @apply flex flex-col justify-center top-0 left-0 w-full h-full;
+  @apply px-3;
+
+  & > div {
+    @apply flex flex-col gap-4;
+    border-radius: 20px;
+    padding: 24px 24px;
+    max-height: 90lvh;
+    background: var(--neutral-varient);
+    @apply mx-auto w-full max-w-md h-fit;
+    min-width: 280px;
+    height: fit-content;
+
+    header {
+      @apply flex flex-col justify-start;
+
+      h1 {
+        @apply text-lg;
+      }
+
+      &:has(svg) {
+        @apply items-center;
+
+        > svg {
+          width: 32px;
+          height: 32px;
+          color: var(--primary);
+        }
+      }
+    }
+
+    main {
+      overflow-y: auto;
+    }
+
+    form {
+      overflow-y: auto;
+
+      label {
+        background: var(--neutral-varient);
+      }
+    }
+
+    footer {
+      @apply flex justify-end;
+    }
+  }
+
+  @keyframes grow {
+    0% {
+      height: 0%;
+    }
+
+    100% {
+      height: fit-content;
+    }
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 0%;
+    }
+
+    75% {
+      opacity: 50%;
+    }
+
+    100% {
+      opacity: 100%;
+    }
+  }
+}

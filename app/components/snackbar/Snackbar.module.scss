@@ -1,0 +1,37 @@
+.snackbar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: -100px;
+  width: 100%;
+  padding: 4px 8px;
+  transition: bottom 0.2s ease-in;
+  z-index: 50;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #323432;
+  color: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  padding: 12px 16px;
+  @apply shadow w-full sm:w-fit sm:max-w-xl gap-2 z-50;
+
+  button {
+    padding: 4px 8px;
+    color: var(--tonal);
+    border-radius: 10px;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+.show {
+  bottom: 8px;
+}

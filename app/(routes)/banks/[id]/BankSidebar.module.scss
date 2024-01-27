@@ -1,0 +1,22 @@
+aside.bankSidebar {
+  @apply w-full md:w-64 shrink md:shrink-0;
+  > div {
+    @apply flex flex-col gap-4 shrink-0;
+  }
+}
+
+.bankInfo {
+  @apply flex flex-col gap-1.5;
+
+  ul {
+    @apply flex flex-col gap-1 text-sm;
+
+    li {
+      @apply flex gap-1.5 items-center;
+
+      svg {
+        @apply w-5 h-5 text-gray-600;
+      }
+    }
+  }
+}

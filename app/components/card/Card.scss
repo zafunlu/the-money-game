@@ -1,0 +1,25 @@
+div.card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 16px 16px;
+  border: 1px solid var(--outline);
+
+  &.white {
+    border: 0;
+  }
+
+  &.solid {
+    border: 0;
+    background: var(--neutral-varient);
+  }
+
+  &.transparent {
+    border: 0;
+    background: none;
+  }
+
+  footer {
+    display: flex;
+    gap: 6px;
+  }
+}

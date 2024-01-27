@@ -1,0 +1,25 @@
+.article {
+  @apply flex flex-col gap-4;
+
+  h1,
+  h2,
+  h3 {
+    @apply font-extrabold;
+  }
+
+  h1 {
+    @apply text-xl;
+  }
+
+  h2 {
+    @apply text-lg;
+  }
+
+  h3 {
+    @apply text-base;
+  }
+
+  ul {
+    @apply list-disc list-inside;
+  }
+}

@@ -1,0 +1,58 @@
+.top-bar-container {
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 8px;
+  height: 64px;
+  gap: 24px;
+  background: var(--neutral);
+  transition: border 0.3s ease;
+  @apply z-30;
+}
+
+.top-bar-container.scrolled {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.headline {
+  @apply flex justify-center w-full;
+
+  a {
+    color: var(--body-text);
+    padding: 6px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    @apply flex items-center justify-center gap-2;
+    @apply text-xl w-fit;
+    @apply duration-300 transition-colors ease-linear;
+
+    svg {
+      @apply duration-300 transition-colors ease-linear;
+    }
+
+    &:hover {
+      svg {
+        @apply text-pink-400;
+      }
+
+      background: var(--neutral-hover);
+      color: var(--body-text);
+    }
+
+    &:active {
+      background: var(--neutral-pressed);
+    }
+
+    &:focus {
+      color: var(--body-text);
+    }
+  }
+}
+
+.trailing-icon,
+.leading-icon {
+  width: 40px;
+  height: 40px;
+}

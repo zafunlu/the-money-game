@@ -1,0 +1,205 @@
+button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  text-decoration: none;
+  @apply transition-colors duration-300 ease-linear;
+
+  &:disabled {
+    @apply cursor-not-allowed;
+  }
+}
+
+a.common,
+button.common {
+  @extend button;
+
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  height: 40px;
+  border-radius: 20px;
+  padding: 0 16px;
+  white-space: nowrap;
+
+  &:has(svg) {
+    padding-right: 24px;
+  }
+}
+
+button.common.sm {
+  height: 30px;
+  padding: 0 10px;
+  gap: 5px;
+  @apply text-sm;
+
+  &:has(svg) {
+    padding-right: 16px;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+a.common.filled,
+button.common.filled {
+  background: var(--primary);
+  color: var(--primary-text);
+
+  &:hover {
+    background: var(--primary-hover);
+  }
+
+  &:active {
+    background: var(--primary-pressed);
+  }
+
+  &:disabled {
+    background: var(--disabled);
+    color: var(--disabled-text);
+  }
+}
+
+a.common.filled-tonal,
+button.common.filled-tonal {
+  background: var(--tonal);
+  color: var(--body-text);
+
+  &:hover {
+    background: var(--tonal-hover);
+  }
+
+  &:active {
+    background: var(--tonal-pressed);
+  }
+}
+
+a.common.filled-tertiary,
+button.common.filled-tertiary {
+  background: var(--tertiary);
+  color: var(--tertiary-text);
+
+  &:hover {
+    background: var(--tertiary-hover);
+  }
+
+  &:active {
+    background: var(--tertiary-pressed);
+  }
+}
+
+a.common.filled-error,
+button.common.filled-error {
+  background: var(--error);
+  color: var(--primary-text);
+
+  &:hover {
+    background: var(--error-hover);
+  }
+
+  &:active {
+    background: var(--error-pressed);
+  }
+}
+
+a.common.outlined,
+button.common.outlined {
+  color: var(--primary);
+  border: 1px solid var(--primary);
+
+  &:hover {
+    background: var(--tonal);
+  }
+
+  &:active {
+    background: var(--tonal-pressed);
+  }
+
+  &:disabled {
+    color: var(--input-outline);
+    border-color: var(--input-outline);
+
+    &:hover {
+      background: var(--outline);
+    }
+  }
+}
+
+a.common.outlined-error,
+button.common.outlined-error {
+  color: var(--error);
+  border: 1px solid var(--error);
+
+  &:hover {
+    background: var(--error-shadow);
+  }
+
+  &:active {
+    background: var(--error-shadow-pressed);
+  }
+}
+
+a.ghost,
+button.ghost {
+  color: var(--primary);
+
+  &:hover {
+    background: var(--tonal);
+  }
+
+  &:active {
+    background: var(--tonal-pressed);
+  }
+
+  &:disabled {
+    color: var(--disabled-text);
+
+    &:hover {
+      background: var(--neutral-pressed);
+    }
+  }
+}
+
+a.icon,
+button.icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+
+  &:hover {
+    background: var(--neutral-hover);
+  }
+
+  &:active {
+    background: var(--neutral-pressed);
+  }
+}
+
+a.icon.filled,
+button.icon.filled {
+  background: var(--primary);
+  color: var(--primary-text);
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover {
+    background: var(--primary-hover);
+  }
+
+  &:active {
+    background: var(--primary-pressed);
+  }
+}
+
+input[type="reset"],
+input[type="submit"] {
+  @extend button;
+  @apply cursor-pointer;
+}

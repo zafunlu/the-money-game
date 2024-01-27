@@ -1,0 +1,26 @@
+.popoverMenu {
+  background: var(--neutral);
+  border-radius: 8px;
+  @apply absolute w-fit min-w-40 h-fit shadow z-10 whitespace-nowrap right-0 border py-2;
+
+  ul li button,
+  ul li a {
+    flex-direction: row;
+    justify-content: start;
+    gap: 8px;
+    height: 40px;
+    padding: 12px;
+    text-align: left;
+    width: 100%;
+    font-weight: normal;
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    &:hover {
+      background: #0000000b;
+    }
+  }
+}

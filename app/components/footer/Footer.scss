@@ -1,0 +1,43 @@
+footer.primary {
+  margin-top: 32px;
+  padding: 16px 0 24px 0;
+  background: var(--neutral-varient);
+  border-top: 1px solid var(--neutral-pressed);
+  color: #555;
+
+  .bytebury-link {
+    color: #555;
+    text-decoration: none;
+    @apply flex items-center gap-1 transition duration-300 ease-linear;
+
+    svg {
+      @apply transition duration-300 ease-linear;
+    }
+
+    &:hover {
+      @apply text-blue-600;
+
+      svg {
+        @apply text-blue-600;
+      }
+    }
+  }
+
+  .legal {
+    @apply text-sm;
+    @apply mt-4 md:mt-0;
+
+    ul {
+      @apply flex gap-2;
+    }
+
+    a:link,
+    a:visited,
+    a:active {
+      color: #555;
+      text-decoration: none;
+      @apply duration-300 transition-colors ease-linear;
+      @apply hover:text-primary;
+    }
+  }
+}

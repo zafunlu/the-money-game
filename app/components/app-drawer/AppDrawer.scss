@@ -1,0 +1,118 @@
+.app-drawer-backdrop {
+  transition: background 0.3s ease-in-out;
+
+  &:has(nav.app-drawer.opened) {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+    width: 100%;
+    background: #00000077;
+  }
+}
+
+nav.app-drawer {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  background: var(--neutral-varient);
+  transition: left 0.3s ease-in;
+  z-index: 100;
+  height: 100vh;
+  height: 100dvh;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  width: 80%;
+  padding: 16px 8px 16px 16px;
+  @apply max-w-96 overflow-y-auto;
+
+  h1 {
+    margin-bottom: 16px;
+    color: #333;
+    @apply font-semibold;
+  }
+
+  ul {
+    padding-left: 8px;
+    @apply flex flex-col gap-1;
+
+    li {
+      margin-left: -16px;
+      width: calc(100% + 16px);
+      @apply font-semibold;
+
+      a,
+      button {
+        @apply flex flex-row items-center gap-3 justify-between w-full;
+        height: 46px;
+        padding: 0px 24px 0 16px;
+        border-radius: 20px;
+        text-decoration: none;
+        cursor: pointer;
+        color: var(--body-text);
+
+        > div {
+          @apply flex items-center gap-3;
+        }
+
+        &:hover {
+          background: var(--neutral-pressed);
+        }
+
+        &:active {
+          background: var(--neutral-pressed);
+        }
+
+        &.active {
+          background: var(--tonal-hover);
+
+          &:hover {
+            background: var(--neutral-pressed);
+          }
+        }
+      }
+
+      details {
+        > summary {
+          @extend button;
+          @apply flex items-center gap-3 justify-between;
+          @apply transition-colors duration-300 ease-in;
+
+          &::-webkit-details-marker {
+            display: none;
+          }
+
+          &::after {
+            font-size: 24px;
+            font-family: "Material Icons Outlined";
+            content: "\e5cf";
+          }
+        }
+
+        &[open] {
+          display: block;
+
+          > summary {
+            background: var(--neutral-pressed);
+            @apply mb-1;
+
+            &::after {
+              font-size: 24px;
+              font-family: "Material Icons Outlined";
+              content: "\e5ce";
+            }
+          }
+
+          > ul {
+            margin-left: 24px;
+          }
+        }
+      }
+    }
+  }
+}
+
+nav.app-drawer.opened {
+  left: 0;
+}

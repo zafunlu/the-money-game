@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "styles/forms";
+@import "styles/buttons";
+@import "styles/shimmers";
+
+:root {
+  --primary: #1d692f;
+  --primary-hover: #135322;
+  --primary-pressed: #0f471c;
+  --tonal: #def5d9;
+  --tonal-hover: #cae6c4;
+  --tonal-pressed: #b8d9b1;
+  --tertiary: #f5d9ec;
+  --tertiary-hover: #e9c3dd;
+  --tertiary-pressed: #dfadcf;
+  --error: #c7463c;
+  --error-hover: #bd4037;
+  --error-pressed: #a7362e;
+  --error-shadow: #f7dedc;
+  --error-shadow-pressed: #e8c8c5;
+  --primary-text: white;
+  --body-text: #222222;
+  --neutral: #f6f8f1;
+  --neutral-varient: #edf1e5;
+  --neutral-hover: #e9ece0;
+  --neutral-pressed: #dde2d2;
+  --outline: #00000022;
+  --input-outline: #00000075;
+  --disabled: #e8ebe8;
+  --disabled-text: #888;
+}
+
+body {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  color: var(--body-text);
+  background: var(--neutral);
+}
+
+@layer utilities {
+  h1 {
+    @apply font-extrabold;
+  }
+
+  hr {
+    @apply my-1.5 border-t border-outline;
+  }
+}
+
+@layer base {
+  a {
+    color: var(--primary);
+    text-decoration: underline;
+
+    &:hover {
+      color: var(--primary-hover);
+    }
+
+    &:focus,
+    &:active {
+      color: var(--primary-pressed);
+    }
+  }
+}
+
+@layer components {
+  a {
+    @apply transition-colors duration-300 ease-linear;
+  }
+
+  .pill {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border-radius: 20px;
+    padding: 4px 12px;
+    @apply text-sm;
+  }
+}

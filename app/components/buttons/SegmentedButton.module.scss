@@ -1,0 +1,54 @@
+.wrapper {
+  @apply flex items-center justify-center;
+  height: 48px;
+}
+
+.segmentedButton {
+  @apply flex items-center w-4/5 justify-center;
+
+  input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  input[type="radio"]:checked + label {
+    @apply flex items-center justify-center gap-2;
+    background: var(--tonal);
+
+    &::before {
+      font-family: "Material Icons";
+      content: "\e5ca";
+    }
+  }
+
+  input[type="radio"] + label {
+    display: block;
+    position: relative;
+    border: 1px solid var(--input-outline);
+    border-right: 0;
+    padding: 6px 18px;
+    cursor: pointer;
+    text-align: center;
+    @apply transition-colors duration-300 ease-linear shrink-0;
+
+    &:hover {
+      background: var(--tonal-hover);
+    }
+
+    &:active {
+      background: var(--tonal-pressed);
+    }
+  }
+
+  input[type="radio"] + label:first-of-type {
+    border-top-left-radius: 24px;
+    border-bottom-left-radius: 24px;
+  }
+
+  input[type="radio"] + label:last-of-type {
+    border-top-right-radius: 24px;
+    border-bottom-right-radius: 24px;
+    border-right: 1px solid var(--input-outline);
+  }
+}

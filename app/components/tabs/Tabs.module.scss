@@ -1,0 +1,27 @@
+.tabsHeader {
+  ul {
+    @apply flex w-full overflow-x-auto;
+    height: 43px;
+    border-bottom: 1px solid var(--outline);
+
+    li {
+      a {
+        @apply h-full flex items-center no-underline px-5 font-bold;
+        color: var(--primary);
+
+        &:hover {
+          background: var(--neutral-varient);
+        }
+      }
+    }
+  }
+}
+
+.active {
+  a span {
+    margin-top: 4px;
+    color: var(--primary);
+    line-height: 34px;
+    border-bottom: 4px solid var(--primary);
+  }
+}
