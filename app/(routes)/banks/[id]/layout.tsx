@@ -38,7 +38,6 @@ export default function BankLayout({ children }: BankLayoutProps) {
   useEffect(() => {
     setTabs([
       { link: `/banks/${params.id}`, displayText: "Customers" },
-      { link: `/banks/${params.id}/insights`, displayText: "Insights" },
       { link: `/banks/${params.id}/settings`, displayText: "Settings" },
     ]);
   }, [params]);
