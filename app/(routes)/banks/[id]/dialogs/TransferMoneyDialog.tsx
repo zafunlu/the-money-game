@@ -181,12 +181,13 @@ export function TransferMoneyDialog() {
           </div>
           <div className="form-field">
             <label htmlFor="transfer_money_dialog_description">Description</label>
-            <textarea
+            <input
               id="transfer_money_dialog_description"
               name="description"
               maxLength={255}
               onChange={handleChange}
-            ></textarea>
+              type="text"
+            />
           </div>
         </main>
         <footer>
