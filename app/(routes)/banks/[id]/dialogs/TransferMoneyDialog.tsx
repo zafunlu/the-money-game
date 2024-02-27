@@ -69,8 +69,8 @@ export function TransferMoneyDialog() {
         }
         break;
       case "description":
-        if (value.length > 25) {
-          errors.description = "Description can only be 25 characters";
+        if (value.length > 35) {
+          errors.description = "Description can only be 35 characters";
         }
         break;
     }
@@ -189,7 +189,7 @@ export function TransferMoneyDialog() {
             <input
               id="transfer_money_dialog_description"
               name="description"
-              maxLength={25}
+              maxLength={35}
               onChange={handleChange}
               placeholder="Enter a very short description"
               type="text"
