@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { banksAction, selectCurrentBank } from "@/lib/features/banks/banksSlice";
 import { CustomerGuard } from "@/app/guards/CustomerGuard";
 import { NoCustomerGuard } from "@/app/guards/NoCustomerGuard";
+import { Notice } from "@/app/components/notice/Notice";
 
 export default function BankSignInPage() {
   const { username, slug } = useParams();
@@ -59,6 +60,12 @@ export default function BankSignInPage() {
       <NoCustomerGuard>
         <main className="container max-w-2xl">
           <Card className="flex flex-col gap-4" type="outlined">
+            <Notice icon="warning-outline">
+              <span className="text-sm">
+                Fun Banking is an online banking simulator for educational purposes. Do not enter
+                real bank information.
+              </span>
+            </Notice>
             <section>
               <h1 className="text-xl">Sign in to {bank.name}</h1>
               <p>{bank.description}</p>
