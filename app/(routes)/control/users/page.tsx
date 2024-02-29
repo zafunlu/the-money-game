@@ -60,6 +60,18 @@ export default function UsersControlPage() {
     fetchUsers({ username: "", email: "" }, 1);
   }
 
+  function nextPage(): void {
+    const nextPageNumber = pageNumber + 1;
+    setPageNumber(nextPageNumber);
+    fetchUsers(formData, nextPageNumber);
+  }
+
+  function previousPage(): void {
+    const previousPageNumber = pageNumber - 1;
+    setPageNumber(previousPageNumber);
+    fetchUsers(formData, previousPageNumber);
+  }
+
   if (!searchResults) {
     return (
       <Card type="outlined" className="flex flex-col gap-4">
@@ -128,10 +140,10 @@ export default function UsersControlPage() {
         })}
       </section>
       <div className="flex items-center justify-between">
-        <button disabled={pageNumber === 1} className="common outlined">
+        <button onClick={previousPage} disabled={pageNumber === 1} className="common outlined">
           Previous
         </button>
-        <button disabled={isLastPage} className="common outlined">
+        <button onClick={nextPage} disabled={isLastPage} className="common outlined">
           Next
         </button>
       </div>
