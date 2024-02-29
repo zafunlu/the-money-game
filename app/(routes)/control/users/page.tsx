@@ -13,9 +13,9 @@ export default function UsersControlPage() {
   const [pageNumber, setPageNumber] = useState(1);
   const [isLastPage, setIsLastPage] = useState(true);
 
-  const fetchUsers = async () => {
+  const fetchUsers = async (data = formData, page = pageNumber) => {
     const response = await GET(
-      `/users?username=${formData.username}&email=${formData.email}&pageNumber=${pageNumber}`
+      `/users?username=${data.username}&email=${data.email}&pageNumber=${page}`
     );
     const users = await response.json();
 
@@ -55,6 +55,11 @@ export default function UsersControlPage() {
     fetchUsers();
   }
 
+  function resetForm(): void {
+    setFormData({ username: "", email: "" });
+    fetchUsers({ username: "", email: "" }, 1);
+  }
+
   if (!searchResults) {
     return (
       <Card type="outlined" className="flex flex-col gap-4">
@@ -86,7 +91,7 @@ export default function UsersControlPage() {
             </div>
           </div>
           <div className="flex w-full justify-end gap-2">
-            <input className="common ghost" type="reset" value="Reset" />
+            <input className="common ghost" type="reset" value="Reset" onClick={resetForm} />
             <input className="common filled" type="submit" value="Search" />
           </div>
         </form>
