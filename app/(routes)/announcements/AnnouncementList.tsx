@@ -10,7 +10,7 @@ export function AnnouncementList() {
 
   useEffect(() => {
     const fetchAnnouncements = async () => {
-      const response = await fetch(`${AppConstants.BACKEND_URL}/announcements?limit=20`, {
+      const response = await fetch(`${AppConstants.BACKEND_URL}/announcements?itemsPerPage=20`, {
         method: "GET",
       });
       const announcementInfo = await response.json();

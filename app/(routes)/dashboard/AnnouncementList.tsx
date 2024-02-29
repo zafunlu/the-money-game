@@ -17,7 +17,7 @@ export function AnnouncementList() {
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {
-        const response = await GET(`/announcements?page=1&limit=5`);
+        const response = await GET(`/announcements?pageNumber=1&itemsPerPage=5`);
 
         if (response.ok) {
           const { items: announcementsData } = await response.json();
