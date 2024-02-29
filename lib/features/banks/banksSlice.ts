@@ -58,7 +58,7 @@ const banksSlice = createSlice({
 });
 
 export const fetchBanks = createAsyncThunk("banks/all", async () => {
-  const response = await GET("/banks");
+  const response = await GET("/my-banks");
 
   if (!response.ok) {
     const { message } = await response.json();
@@ -82,7 +82,7 @@ export const fetchBank = createAsyncThunk("banks/find", async (id: string | numb
 export const fetchEmployees = createAsyncThunk(
   "employees/bank",
   async (bankId: string | number) => {
-    const response = await GET(`/employees/bank/${bankId}`);
+    const response = await GET(`/employees/banks/${bankId}`);
     return response.json();
   }
 );
