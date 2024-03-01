@@ -1,6 +1,8 @@
 "use client";
 
 import { Card } from "@/app/components/card/Card";
+import { Dialog } from "@/app/components/dialog/Dialog";
+import { MatIcon } from "@/app/components/icons/MatIcon";
 import { ProfilePreview } from "@/app/components/profile-preview/ProfilePreview";
 import { formatDate, formatNumber } from "@/app/utils/formatters";
 import { GET } from "@/app/utils/http-client";
@@ -12,6 +14,8 @@ export default function UsersControlPage() {
   const [formData, setFormData] = useState({ username: "", email: "" });
   const [pageNumber, setPageNumber] = useState(1);
   const [isLastPage, setIsLastPage] = useState(true);
+  const [banksResults, setBanksResults] = useState<any>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const fetchUsers = async (data = formData, page = pageNumber) => {
     const response = await GET(
@@ -52,7 +56,7 @@ export default function UsersControlPage() {
 
   function submitSearch(event: any): void {
     event.preventDefault();
-    fetchUsers();
+    fetchUsers({ ...formData }, 1);
   }
 
   function resetForm(): void {
@@ -70,6 +74,13 @@ export default function UsersControlPage() {
     const previousPageNumber = pageNumber - 1;
     setPageNumber(previousPageNumber);
     fetchUsers(formData, previousPageNumber);
+  }
+
+  async function viewBanks(userId: string): Promise<void> {
+    const response = await GET(`/banks?user_id=${userId}`);
+    const data = await response.json();
+    setIsDialogOpen(true);
+    setBanksResults(data);
   }
 
   if (!searchResults) {
@@ -113,7 +124,10 @@ export default function UsersControlPage() {
         <h1>Results ({formatNumber(searchResults.total_items)})</h1>
         {searchResults.items.map((user: any) => {
           return (
-            <div className="flex border-b first:border-t py-2" key={user.id}>
+            <div
+              className="flex justify-between items-center border-b first:border-t py-2"
+              key={user.id}
+            >
               <div className="flex gap-3 items-center">
                 <ProfilePreview className="w-8 h-8" user={user} />
                 <div className="text-sm">
@@ -135,6 +149,16 @@ export default function UsersControlPage() {
                   </div>
                 </div>
               </div>
+              <div>
+                <button
+                  className="common ghost"
+                  onClick={() => {
+                    viewBanks(user.id);
+                  }}
+                >
+                  View
+                </button>
+              </div>
             </div>
           );
         })}
@@ -147,6 +171,35 @@ export default function UsersControlPage() {
           Next
         </button>
       </div>
+      {banksResults && isDialogOpen && (
+        <Dialog>
+          <header>
+            <MatIcon icon="visibility-outline" />
+            <h1>Viewing Banks</h1>
+          </header>
+          {banksResults.items.length === 0 ? (
+            <div className="text-center">No Banks Available</div>
+          ) : (
+            ""
+          )}
+          <ul>
+            {banksResults.items.map((bank: any) => {
+              return (
+                <li key={bank.id}>
+                  <Link href={`/banks/${bank.id}`}>
+                    {bank.owner.username}/{bank.name}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+          <footer>
+            <button onClick={() => setIsDialogOpen(false)} className="common ghost">
+              Cancel
+            </button>
+          </footer>
+        </Dialog>
+      )}
     </Card>
   );
 }
