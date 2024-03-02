@@ -4,6 +4,7 @@ import { Card } from "@/app/components/card/Card";
 import { Dialog } from "@/app/components/dialog/Dialog";
 import { MatIcon } from "@/app/components/icons/MatIcon";
 import { ProfilePreview } from "@/app/components/profile-preview/ProfilePreview";
+import { isToday } from "@/app/utils/form-validators";
 import { formatDate, formatNumber } from "@/app/utils/formatters";
 import { GET } from "@/app/utils/http-client";
 import Link from "next/link";
@@ -11,7 +12,11 @@ import { ChangeEvent, useEffect, useState } from "react";
 
 export default function UsersControlPage() {
   const [searchResults, setSearchResults] = useState<any>(null);
-  const [formData, setFormData] = useState({ username: "", email: "" });
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    last_seen: "",
+  });
   const [pageNumber, setPageNumber] = useState(1);
   const [isLastPage, setIsLastPage] = useState(true);
   const [banksResults, setBanksResults] = useState<any>(null);
@@ -19,7 +24,7 @@ export default function UsersControlPage() {
 
   const fetchUsers = async (data = formData, page = pageNumber) => {
     const response = await GET(
-      `/users?username=${data.username}&email=${data.email}&pageNumber=${page}`
+      `/users?username=${data.username}&email=${data.email}&last_seen=${data.last_seen}&pageNumber=${page}`
     );
     const users = await response.json();
 
@@ -60,8 +65,8 @@ export default function UsersControlPage() {
   }
 
   function resetForm(): void {
-    setFormData({ username: "", email: "" });
-    fetchUsers({ username: "", email: "" }, 1);
+    setFormData({ username: "", email: "", last_seen: "" });
+    fetchUsers({ username: "", email: "", last_seen: "" }, 1);
   }
 
   function nextPage(): void {
@@ -113,6 +118,9 @@ export default function UsersControlPage() {
               />
             </div>
           </div>
+          <div className="form-field">
+            <input name="last_seen" onChange={handleChange} type="date" placeholder="Last Seen" />
+          </div>
           <div className="flex w-full justify-end gap-2">
             <input className="common ghost" type="reset" value="Reset" onClick={resetForm} />
             <input className="common filled" type="submit" value="Search" />
@@ -136,6 +144,9 @@ export default function UsersControlPage() {
                       {user.first_name} {user.last_name}
                     </div>
                     <div className="text-gray-600 text-xs">(@{user.username})</div>
+                    {isToday(user.last_seen) && (
+                      <div className="w-2 h-2 bg-emerald-600 rounded-full"></div>
+                    )}
                   </div>
                   <div className="text-xs">
                     <Link href={`mailto:${user.email}`}>{user.email}</Link>

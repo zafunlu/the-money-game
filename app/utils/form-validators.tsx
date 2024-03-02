@@ -48,3 +48,11 @@ export function isTheSame(value1: string, value2: string): boolean {
 export function hasErrors(formErrors: any): boolean {
   return Object.values(formErrors).some(Boolean);
 }
+
+export function isToday(date: string): boolean {
+  const today = new Date();
+  const dayOfMonth = today.getDate().toString().padStart(2, "0");
+  const month = `${today.getMonth() + 1}`.padStart(2, "0");
+  const year = today.getFullYear();
+  return `${year}-${month}-${dayOfMonth}` === date.slice(0, 10);
+}
