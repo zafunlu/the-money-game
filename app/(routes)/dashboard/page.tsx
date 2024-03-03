@@ -10,10 +10,26 @@ import { BankList } from "./BankList";
 import { CreateBankDialog } from "./CreateBankDialog";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
+import { useEffect, useState } from "react";
+import { Dialog } from "@/app/components/dialog/Dialog";
 
 export default function DashboardPage() {
   const dialogs = useAppSelector<any>((state) => state.dialogs);
   const dispatch = useAppDispatch();
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
+
+  useEffect(() => {
+    const getDisclaimer = localStorage.getItem("disclaimer_acknowledged");
+
+    if (!getDisclaimer) {
+      setShowDisclaimer(true);
+    }
+  }, []);
+
+  function acknowledge(): void {
+    localStorage.setItem("disclaimer_acknowledged", "true");
+    setShowDisclaimer(false);
+  }
 
   function openCreateBankDialog() {
     dispatch(dialogsAction.openCreateBankDialog());
@@ -87,6 +103,29 @@ export default function DashboardPage() {
           </div>
         </div>
       </main>
+      {showDisclaimer && (
+        <Dialog>
+          <header>
+            <MatIcon icon="warning-outline" />
+            <h1>Fun Banking is a Simulator</h1>
+          </header>
+          <div className="flex flex-col gap-2">
+            <p>
+              Fun Banking is an online simulation designed for educators and families with the aim
+              of instructing young adults in acquiring effective money management skills.
+            </p>
+            <p>
+              The funds within Fun Banking are <u>simulated and hold no real-world value</u>;
+              therefore, <u>refrain</u> from inputting genuine information into our system.
+            </p>
+          </div>
+          <footer>
+            <button onClick={acknowledge} className="common ghost">
+              Acknowledge
+            </button>
+          </footer>
+        </Dialog>
+      )}
     </AuthenticatedGuard>
   );
 }
