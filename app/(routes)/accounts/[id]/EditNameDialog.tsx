@@ -61,6 +61,7 @@ export function EditAccountNameDialog() {
             className="capitalize"
             placeholder="Account Name"
             defaultValue={account?.name ?? ""}
+            maxLength={12}
             required
             onChange={handleChange}
           />
