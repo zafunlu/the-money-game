@@ -6,25 +6,23 @@ import { fetchAccount, selectAccount } from "@/lib/features/accounts/accountsSli
 import { appBarActions } from "@/lib/features/app-bar/appBarSlice";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { useParams } from "next/navigation";
 import { useEffect } from "react";
 
-export default function CustomerAccountPage() {
-  const { id } = useParams();
+export default function CustomerAccountPage({ params }: { params: { id: string } }) {
   const dispatch = useAppDispatch();
   const account = useAppSelector(selectAccount);
 
   useEffect(() => {
-    dispatch(fetchAccount(id as string));
+    dispatch(fetchAccount(params.id));
     dispatch(appBarActions.displayGoBack());
     dispatch(dialogsAction.closeViewCustomer());
 
     return () => {
       dispatch(appBarActions.displayDefault());
     };
-  }, [dispatch, id]);
+  }, [dispatch, params.id]);
 
-  if (id && !account) {
+  if (params.id && !account) {
     return <>Loading...</>;
   }
 
