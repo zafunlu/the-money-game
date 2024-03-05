@@ -37,7 +37,7 @@ export function CustomersTable() {
   }
 
   function openTransferMoneyDialog(customer: any): void {
-    dispatch(accountsAction.setCurrentAccount(customer.accounts[0]));
+    dispatch(accountsAction.setCurrentAccount(null));
     dispatch(customerAction.setCustomer(customer));
     dispatch(dialogsAction.openTransferMoney());
   }

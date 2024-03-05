@@ -8,7 +8,7 @@ import { useAuth } from "@/app/guards/AuthContext";
 import { AMOUNT_TOO_LARGE, hasErrors } from "@/app/utils/form-validators";
 import { formatCurrency } from "@/app/utils/formatters";
 import { PUT } from "@/app/utils/http-client";
-import { fetchAccount, selectAccount } from "@/lib/features/accounts/accountsSlice";
+import { accountsAction, fetchAccount, selectAccount } from "@/lib/features/accounts/accountsSlice";
 import {
   fetchCustomer,
   fetchCustomers,
@@ -16,7 +16,7 @@ import {
 } from "@/lib/features/customers/customerSlice";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function TransferMoneyDialog() {
   const dispatch = useAppDispatch();
@@ -27,7 +27,7 @@ export function TransferMoneyDialog() {
 
   const [formData, setFormData] = useState({
     transactionType: "",
-    accountId: currentAccount?.id + "",
+    accountId: customer?.accounts[0].id + "",
     amount: "",
     description: "",
   });
@@ -37,6 +37,12 @@ export function TransferMoneyDialog() {
     amount: "",
     description: "",
   });
+
+  useEffect(() => {
+    if ((customer?.accounts.length ?? 0) > 1) {
+      dispatch(accountsAction.setCurrentAccount(null));
+    }
+  }, [customer, dispatch]);
 
   function closeTransferMoneyDialog() {
     dispatch(dialogsAction.closeTransferMoney());
@@ -165,7 +171,7 @@ export function TransferMoneyDialog() {
               Withdraw
             </label>
           </SegmentedButton>
-          {!currentAccount && (
+          {(customer?.accounts.length ?? 1) > 1 && (
             <div className="form-field">
               <label htmlFor="select_account">Select Account</label>
               <select
