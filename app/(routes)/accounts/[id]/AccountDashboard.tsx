@@ -14,7 +14,8 @@ import { EditAccountNameDialog } from "./EditNameDialog";
 import { Notice } from "@/app/components/notice/Notice";
 import { useEffect, useState } from "react";
 import { GET } from "@/app/utils/http-client";
-import { CSVLink } from "react-csv";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { AccountStatementDocument } from "./AccountStatementDocument";
 
 type AccountDashboardProps = { account: any };
 
@@ -35,7 +36,7 @@ export function AccountDashboard({ account }: AccountDashboardProps) {
     const fetchAccount = async () => {
       try {
         const response = await GET(
-          `/accounts/${account.id}/transactions?status=approved&startDate=${statementYear}-${statementMonth}-1&endDate=${statementEndYear}-${statementEndMonth}-1&limit=250`
+          `/accounts/${account.id}/transactions?status=approved&startDate=${statementYear}-${statementMonth}-1&endDate=${statementEndYear}-${statementEndMonth}-1&limit=250&direction=ASC`
         );
 
         if (!response.ok) return;
@@ -60,8 +61,8 @@ export function AccountDashboard({ account }: AccountDashboardProps) {
     dispatch(dialogsAction.openEditAccount());
   }
 
-  function getStatementAsCSV(): any[][] {
-    const rows = statement.map((row: any) => {
+  function getStatementAsCSV(): any[] {
+    return statement.map((row: any) => {
       return [
         row.updated_at.slice(0, 10),
         row.description.replace(",", ""),
@@ -70,7 +71,6 @@ export function AccountDashboard({ account }: AccountDashboardProps) {
         formatCurrency(row.current_balance),
       ];
     });
-    return [["Date", "Description", "Credit", "Debit", "Balance"], ...rows];
   }
 
   if (!customer || !account) {
@@ -109,18 +109,22 @@ export function AccountDashboard({ account }: AccountDashboardProps) {
         <Notice icon="receipt-long-outline" type="info">
           <div className="flex justify-between w-full items-center">
             <div>You have a bank statement ready from last month!</div>
-            <CSVLink
-              data={getStatementAsCSV()}
-              filename={`${formatDate(new Date(`${statementYear}-${statementMonth}`), {
+            <PDFDownloadLink
+              fileName={`${formatDate(new Date(`${statementYear}-${statementMonth}`), {
                 month: "long",
                 year: "numeric",
                 day: undefined,
-              })}-${customer.first_name.toLowerCase()}-${customer.last_name.toLowerCase()}-${account.name
-                .trim()
-                .toLowerCase()}-statement-${account.id}`}
+              })}-${account.name.toUpperCase()}-${customer.first_name.toLowerCase()}-${customer.last_name.toLowerCase()}`}
+              document={
+                <AccountStatementDocument
+                  account={account}
+                  customer={customer}
+                  data={getStatementAsCSV()}
+                />
+              }
             >
               Download
-            </CSVLink>
+            </PDFDownloadLink>
           </div>
         </Notice>
       )}
