@@ -44,7 +44,7 @@ export function CustomersTable({ filterValue }: CustomerTableProps) {
   }, [filterValue, customers]);
 
   useEffect(() => {
-    if (!isMultiSelectMode) {
+    if (!isMultiSelectMode && customers.some((customer) => customer.isSelected)) {
       const updatedCustomers = customers.map((customer) => ({ ...customer, isSelected: false }));
       setCustomers(updatedCustomers);
     }
