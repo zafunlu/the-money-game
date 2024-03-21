@@ -1,9 +1,13 @@
 import { MatIcon } from "@/app/components/icons/MatIcon";
 import PopoverMenu from "@/app/components/popovers/PopoverMenu";
-import { customerAction, selectCustomersStatus } from "@/lib/features/customers/customerSlice";
+import {
+  customerAction,
+  selectCustomers,
+  selectCustomersStatus,
+} from "@/lib/features/customers/customerSlice";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { UpdateCustomerDialog } from "./dialogs/UpdateCustomerDialog";
 import { DeleteCustomerDialog } from "./dialogs/DeleteCustomerDialog";
 import { ThunkStatus } from "@/lib/thunk";
@@ -13,13 +17,38 @@ import { formatCurrency } from "@/app/utils/formatters";
 import { accountsAction } from "@/lib/features/accounts/accountsSlice";
 
 type CustomerTableProps = {
-  customers: any[];
+  filterValue?: string;
 };
 
-export function CustomersTable({ customers }: CustomerTableProps) {
+export function CustomersTable({ filterValue }: CustomerTableProps) {
   const dispatch = useAppDispatch();
   const dialogs = useAppSelector<any>((state) => state.dialogs);
+  const customersFromStore = useAppSelector(selectCustomers);
+  const [customers, setCustomers] = useState(customersFromStore);
+  const [filteredCustomers, setFilteredCustomers] = useState(customers);
   const customersStatus = useAppSelector(selectCustomersStatus);
+  const isMultiSelectMode = useAppSelector((state) => state.customers.isMultiSelectEnabled);
+
+  useEffect(() => {
+    setCustomers(customersFromStore);
+  }, [customersFromStore]);
+
+  useEffect(() => {
+    setFilteredCustomers(() => {
+      return customers.filter((customer) => {
+        const fullName =
+          `${customer.first_name} ${customer.last_name} ${customer.pin}`.toLowerCase();
+        return fullName.includes(filterValue?.toLowerCase() ?? "");
+      });
+    });
+  }, [filterValue, customers]);
+
+  useEffect(() => {
+    if (!isMultiSelectMode) {
+      const updatedCustomers = customers.map((customer) => ({ ...customer, isSelected: false }));
+      setCustomers(updatedCustomers);
+    }
+  }, [isMultiSelectMode, customers]);
 
   function openDeleteCustomerDialog(customer: any) {
     dispatch(customerAction.setCustomer(customer));
@@ -46,6 +75,25 @@ export function CustomersTable({ customers }: CustomerTableProps) {
     dispatch(dialogsAction.openViewCustomer());
   }
 
+  function handleSelectCustomer(event: any): void {
+    const { value: customerId, checked } = event.target;
+
+    if (checked) {
+      dispatch(customerAction.addCustomerToSelection(customerId));
+      selectCustomer(Number(customerId));
+    } else {
+      dispatch(customerAction.removeCustomerFromSelection(customerId));
+      selectCustomer(Number(customerId), false);
+    }
+  }
+
+  function selectCustomer(customerId: number, isSelected = true): void {
+    const updatedCustomers = customers.map((customer) => {
+      return customer.id === customerId ? { ...customer, isSelected } : customer;
+    });
+    setCustomers(updatedCustomers);
+  }
+
   if (customersStatus === ThunkStatus.Loading) {
     return <div>Loading...</div>;
   }
@@ -57,7 +105,7 @@ export function CustomersTable({ customers }: CustomerTableProps) {
           <div className="col-span-5">Customer</div>
           <div className="col-span-7 text-right pr-11">Balance</div>
         </div>
-        {customers.length === 0 ? (
+        {filteredCustomers.length === 0 ? (
           <div className="rounded-b-2xl border border-outline px-3 py-2 text-gray-600">
             You do not have any customers yet. Would you like to{" "}
             <button className="inline underline text-primary" onClick={openCreateCustomerDialog}>
@@ -66,15 +114,35 @@ export function CustomersTable({ customers }: CustomerTableProps) {
             ?
           </div>
         ) : (
-          customers.map((customer: any) => {
+          filteredCustomers.map((customer: any) => {
             return (
               <div
                 key={customer.id}
                 className="grid grid-cols-12 items-center last:rounded-b-2xl border border-b-0 last:border-b border-outline px-3 py-2 hover:bg-slate-50"
               >
                 <div className="col-span-5">
-                  <div className="font-bold capitalize">
-                    {customer.first_name} {customer.last_name}
+                  <div className="flex font-bold capitalize gap-2">
+                    {isMultiSelectMode && (
+                      <input
+                        id={`checkbox_select_${customer.id}`}
+                        onChange={handleSelectCustomer}
+                        value={customer.id}
+                        type="checkbox"
+                        disabled={customer.accounts.length > 1}
+                        checked={customer.isSelected ?? false}
+                      />
+                    )}
+                    <label
+                      htmlFor={`checkbox_select_${customer.id}`}
+                      className={
+                        (isMultiSelectMode ? "cursor-pointer " : "cursor-default ") +
+                        (customer.accounts.length > 1 && isMultiSelectMode
+                          ? "text-gray-400 cursor-not-allowed"
+                          : "")
+                      }
+                    >
+                      {customer.first_name} {customer.last_name}
+                    </label>
                   </div>
                   <div className="text-gray-600 text-xs">PIN-{customer.pin}</div>
                 </div>
