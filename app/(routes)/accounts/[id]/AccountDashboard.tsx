@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import { GET } from "@/app/utils/http-client";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { AccountStatementDocument } from "./AccountStatementDocument";
+import { BankBuddyTransferDialog } from "../../banks/[id]/dialogs/BankBuddyTransferDialog";
 
 type AccountDashboardProps = { account: any };
 
@@ -61,6 +62,10 @@ export function AccountDashboard({ account }: AccountDashboardProps) {
     dispatch(dialogsAction.openEditAccount());
   }
 
+  function openBankBuddyTransferDialog(): void {
+    dispatch(dialogsAction.openBankBuddyTransfer());
+  }
+
   function getStatementAsCSV(): any[] {
     return statement.map((row: any) => {
       return [
@@ -95,12 +100,19 @@ export function AccountDashboard({ account }: AccountDashboardProps) {
             )}
           </div>
           <span className="text-3xl font-extrabold">{formatCurrency(account.balance)}</span>
-          <div className="flex justify-center">
+          <div className="flex justify-center gap-2">
             <button
               onClick={openTransferMoneyDialog}
               className="font-normal underline text-primary"
             >
               Withdraw or Deposit
+            </button>
+            &middot;
+            <button
+              onClick={openBankBuddyTransferDialog}
+              className="font-normal underline text-primary"
+            >
+              Send Money
             </button>
           </div>
         </div>
@@ -135,6 +147,7 @@ export function AccountDashboard({ account }: AccountDashboardProps) {
       <RecentTransactions account={account} />
       {dialogs.transferMoney && <TransferMoneyDialog />}
       {dialogs.editAccount && <EditAccountNameDialog />}
+      {dialogs.bankBuddyTransfer && <BankBuddyTransferDialog />}
     </div>
   );
 }
