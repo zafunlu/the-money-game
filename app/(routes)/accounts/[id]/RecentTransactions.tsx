@@ -36,9 +36,12 @@ export function RecentTransactions({ account }: RecentTransactionsProps) {
   }
 
   function getApprovalMessage(transaction: any) {
-    if (transaction.type === "bank_buddy" && transaction.bank_buddy_sender) {
+    if (transaction.type === "bank_buddy") {
       if (transaction.bank_buddy_sender_id === customer?.id) {
         return <>Sent via BankBuddy</>;
+      }
+      if (!transaction.bank_buddy_sender_id) {
+        return <>Sent via BankBuddy via Unknown User</>;
       }
       return (
         <>
@@ -67,7 +70,7 @@ export function RecentTransactions({ account }: RecentTransactionsProps) {
   return (
     <>
       <div className="text-left">
-        <div className="grid grid-cols-2 bg-gray-200 border border-outline rounded-t-[10px] px-3 py-2 font-bold">
+        <div className="flex bg-gray-200 border border-outline rounded-t-[10px] px-3 py-2 font-bold">
           <div>Description</div>
           <div></div>
         </div>
@@ -81,7 +84,7 @@ export function RecentTransactions({ account }: RecentTransactionsProps) {
             return (
               <div
                 key={transaction.id}
-                className={`grid grid-cols-2 bg-white px-3 py-2 border border-outline border-t-0 last-of-type:rounded-b-[10px] last:rounded-b-[10px] items-center hover:bg-slate-50 ${
+                className={`flex justify-between bg-white px-3 py-2 border border-outline border-t-0 last-of-type:rounded-b-[10px] last:rounded-b-[10px] items-center hover:bg-slate-50 ${
                   transaction.status === "declined" ? "line-through text-gray-400" : ""
                 }`}
               >
