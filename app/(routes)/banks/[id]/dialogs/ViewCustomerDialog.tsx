@@ -69,7 +69,7 @@ export function ViewCustomerDialog() {
           <h2 className="font-extrabold">Banking</h2>
           <div>
             <div className="grid grid-cols-2 border border-outline rounded-t-xl px-3 py-1 bg-gray-200 font-bold">
-              <div className="">Account</div>
+              <div>Account</div>
               <div className="text-right">Balance</div>
             </div>
             {customer?.accounts.map((account: any) => {
@@ -79,7 +79,14 @@ export function ViewCustomerDialog() {
                   key={account.id}
                   className="grid grid-cols-2 border border-outline border-t-0 last:rounded-b-xl px-3 py-2 bg-white duration-300 transition-colors ease-in hover:bg-slate-100 cursor-pointer text-inherit hover:text-inherit no-underline"
                 >
-                  <div className="">{account.name}</div>
+                  <div className="flex gap-2 items-center">
+                    {account.name}
+                    {account.is_primary && customer.accounts.length > 1 ? (
+                      <div className="pill text-xs bg-tonal">Primary</div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                   <div className="text-right font-bold">
                     {formatCurrency(account.balance)}&nbsp;&nbsp;&rsaquo;
                   </div>

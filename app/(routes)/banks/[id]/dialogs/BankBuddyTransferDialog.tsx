@@ -94,9 +94,9 @@ export function BankBuddyTransferDialog() {
   }
 
   function validateCustomerSelection(event: any): void {
-    const accountId = event?.value?.accounts
-      .filter((account: any) => account.type === "checking")
-      .at(0)?.id;
+    const accountId = event?.value?.accounts.find((account: any) => {
+      return account.type === "checking" && account.is_primary;
+    })?.id;
 
     if (!accountId) {
       setFormErrors({ ...formErrors, accountId: "Invalid customer selection" });
