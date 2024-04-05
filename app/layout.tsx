@@ -26,6 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2044180719717177"
           crossOrigin="anonymous"
         ></script>
+        <meta name="monetag" content="e6af2b0dc39220485e7231c64ea8a005"></meta>
       </head>
       <body className="pt-[66px]">
         <StoreProvider>
