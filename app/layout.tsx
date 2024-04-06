@@ -27,6 +27,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           crossOrigin="anonymous"
         ></script>
         <meta name="monetag" content="e6af2b0dc39220485e7231c64ea8a005"></meta>
+        <script
+          src="https://alwingulla.com/88/tag.min.js"
+          data-zone="56587"
+          async
+          data-cfasync="false"
+        ></script>
       </head>
       <body className="pt-[66px]">
         <StoreProvider>
