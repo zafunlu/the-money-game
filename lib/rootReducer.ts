@@ -7,6 +7,7 @@ import { dialogsReducer } from "./features/dialogs/dialogsSlice";
 import { customerReducer } from "./features/customers/customerSlice";
 import { accountsReducer } from "./features/accounts/accountsSlice";
 import { appBarReducer } from "./features/app-bar/appBarSlice";
+import { configReducer } from "./features/config/configSlice";
 
 const appReducer = combineReducers({
   users: usersReducer,
@@ -17,6 +18,7 @@ const appReducer = combineReducers({
   dialogs: dialogsReducer,
   customers: customerReducer,
   appBar: appBarReducer,
+  config: configReducer,
 });
 
 const rootReducer = (state: any, action: any) => {

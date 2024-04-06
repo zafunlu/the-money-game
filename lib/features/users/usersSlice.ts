@@ -2,6 +2,7 @@ import { GET } from "@/app/utils/http-client";
 import { User } from "@/lib/models/User";
 import { ThunkStatus } from "@/lib/thunk";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { configAction, fetchConfig } from "../config/configSlice";
 
 export const logout = () => {
   return { type: "LOGOUT" };
@@ -39,8 +40,10 @@ const usersSlice = createSlice({
 
 export const { actions: usersActions, reducer: usersReducer } = usersSlice;
 
-export const fetchCurrentUser = createAsyncThunk<User>("users/current", async () => {
+export const fetchCurrentUser = createAsyncThunk<User>("users/current", async (_, { dispatch }) => {
   const response = await GET(`/current-user`);
+
+  dispatch(fetchConfig());
 
   if (!response.ok) {
     const { message } = await response.json();

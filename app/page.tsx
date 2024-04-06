@@ -7,14 +7,21 @@ import { AppConstants } from "./constants/app-constants";
 import { formatKs } from "./utils/formatters";
 import { NoCustomerGuard } from "./guards/NoCustomerGuard";
 import Image from "next/image";
+import { BankConfig } from "./constants";
 
 async function getAppInfo() {
   const response = await fetch(`${AppConstants.BACKEND_URL}/metrics`, { method: "GET" });
   return response.json();
 }
 
+async function getConfig(): Promise<BankConfig> {
+  const response = await fetch(`${AppConstants.BACKEND_URL}/config`, { method: "GET" });
+  return response.json();
+}
+
 export default async function Home() {
   const appInfo = await getAppInfo();
+  const _config = await getConfig(); // coming soon
 
   return (
     <NonAuthenticatedGuard>
