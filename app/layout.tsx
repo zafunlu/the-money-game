@@ -27,6 +27,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           crossOrigin="anonymous"
         ></script>
         <meta name="monetag" content="e6af2b0dc39220485e7231c64ea8a005"></meta>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(d,z,s){
+                s.src='https://'+d+'/401/'+z;
+                try{
+                  (document.body||document.documentElement).appendChild(s);
+                } catch(e) {}
+              })('aistekso.net',7315485,document.createElement('script'));
+            `,
+          }}
+        ></script>
       </head>
       <body className="pt-[66px]">
         <StoreProvider>
