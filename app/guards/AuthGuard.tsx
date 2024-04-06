@@ -5,6 +5,7 @@ import { useAuth } from "./AuthContext";
 import { useEffect } from "react";
 import { useSnackbar } from "../components/snackbar/snackbar-context";
 import { ThunkStatus } from "@/lib/thunk";
+import { createAds } from "../utils/create-ads";
 
 type AuthenticatedRouteProps = { children: React.ReactNode };
 
@@ -23,6 +24,12 @@ export function AuthenticatedGuard({ children }: AuthenticatedRouteProps) {
       showSnackbar("You need to be signed in to do that");
     }
   }, [isLoading, isLoggedIn, router, signout, showSnackbar]);
+
+  useEffect(() => {
+    if (isLoading !== ThunkStatus.Success && isLoggedIn) {
+      createAds();
+    }
+  }, [isLoading, isLoggedIn]);
 
   if (isLoggedIn && isLoading !== ThunkStatus.Error) {
     return children;
