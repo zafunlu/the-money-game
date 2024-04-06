@@ -110,7 +110,10 @@ export function AccountTransferDialog() {
       if (response.ok) {
         closeDialog();
         dispatch(fetchAccount(account.id));
-        showSnackbar("Successfully transfered money to your other account");
+        const toAccount = customer?.accounts.find(
+          (account) => account.id === payload.to_account_id
+        );
+        showSnackbar(`Successfully transfered money to ${toAccount?.name}`);
       } else {
         const { message } = await response.json();
         showSnackbar(message);
