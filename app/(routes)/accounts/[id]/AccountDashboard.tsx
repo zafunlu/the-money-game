@@ -17,8 +17,8 @@ import { GET } from "@/app/utils/http-client";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { AccountStatementDocument } from "./AccountStatementDocument";
 import { BankBuddyTransferDialog } from "../../banks/[id]/dialogs/BankBuddyTransferDialog";
-import { isFeatureOn } from "@/app/utils/feature-flag.utils";
 import { AccountTransferDialog } from "../../banks/[id]/dialogs/AccountTransferDialog";
+import { selectFeatures } from "@/lib/features/config/configSlice";
 
 type AccountDashboardProps = { account: any };
 
@@ -34,6 +34,7 @@ export function AccountDashboard({ account }: AccountDashboardProps) {
   const statementEndMonth = statementMonth === 11 ? 0 : statementMonth + 1;
   const statementEndYear =
     statementMonth === 11 ? new Date().getFullYear() + 1 : new Date().getFullYear();
+  const featureFlags = useAppSelector(selectFeatures);
 
   useEffect(() => {
     const fetchAccount = async () => {
@@ -121,7 +122,7 @@ export function AccountDashboard({ account }: AccountDashboardProps) {
               Send Money
             </button>
           </div>
-          {isFeatureOn("transfers") && (
+          {featureFlags?.account_transfers && (
             <div className="flex items-center justify-center">
               {customer.accounts.length > 1 ? (
                 <div>

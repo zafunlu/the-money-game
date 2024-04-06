@@ -1,4 +1,4 @@
-import { BankConfig } from "@/app/constants";
+import { BankConfig, FeatureFlags } from "@/app/constants";
 import { GET } from "@/app/utils/http-client";
 import { ThunkStatus } from "@/lib/thunk";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -6,9 +6,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const configSlice = createSlice({
   name: "config",
   initialState: {
-    current: {},
+    current: undefined,
     status: ThunkStatus.Idle,
-  } as { current: BankConfig; status: ThunkStatus },
+  } as { current?: BankConfig; status: ThunkStatus },
   reducers: {
     loadConfig(_state, { payload }) {
       return { ...payload };
@@ -30,6 +30,9 @@ const configSlice = createSlice({
 });
 
 export const { actions: configAction, reducer: configReducer } = configSlice;
+
+export const selectFeatures = (state: any): FeatureFlags | undefined =>
+  state.config.current?.features;
 
 export const fetchConfig = createAsyncThunk<BankConfig>("config", async () => {
   const response = await GET("/config");

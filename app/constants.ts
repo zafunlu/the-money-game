@@ -13,7 +13,13 @@ type bankLimits = {
   storeFronts: number;
 };
 
+export type FeatureFlags = {
+  ads: boolean;
+  account_transfers: boolean;
+};
+
 export type BankConfig = {
+  features: FeatureFlags;
   limits: {
     [SubscriptionTier.Free]: bankLimits;
     [SubscriptionTier.Premium]: bankLimits;
