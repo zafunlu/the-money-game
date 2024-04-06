@@ -2,7 +2,7 @@ export const createAds = () => {
   const monetagAd = document.getElementById("monetag-ad");
   const acknowledgedDisclaimer = localStorage.getItem("disclaimer_acknowledged");
 
-  if (!monetagAd && !acknowledgedDisclaimer) {
+  if (!monetagAd && acknowledgedDisclaimer) {
     const script = document.createElement("script");
     script.id = "monetag-ad";
     script.async = true;
