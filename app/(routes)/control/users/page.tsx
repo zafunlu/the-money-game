@@ -140,8 +140,9 @@ export default function UsersControlPage() {
                 <ProfilePreview className="w-8 h-8" user={user} />
                 <div className="text-sm">
                   <div className="flex gap-1 items-center">
-                    <div className="capitalize">
-                      {user.first_name} {user.last_name}
+                    <div className="flex gap-1 items-center capitalize">
+                      {user.first_name} {user.last_name}{" "}
+                      <MatIcon className="text-blue-500" height={16} width={16} icon="verified" />
                     </div>
                     <div className="text-gray-600 text-xs">(@{user.username})</div>
                     {isToday(user.last_seen) && (
