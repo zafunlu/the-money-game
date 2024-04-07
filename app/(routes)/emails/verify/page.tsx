@@ -1,5 +1,6 @@
 "use client";
 
+import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { POST } from "@/app/utils/http-client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useState } from "react";
@@ -9,6 +10,7 @@ function Page() {
   const token = searchParams.get("token") ?? "";
   const [statusText, setStatusText] = useState("Processing request...");
   const router = useRouter();
+  const { showSnackbar } = useSnackbar();
 
   const verify = useCallback(() => {
     verifyAccount();
@@ -19,6 +21,9 @@ function Page() {
 
         if (response.ok) {
           router.push("/signin");
+          showSnackbar(
+            "Congratulations! You are now verified, you may now log in if you are not already"
+          );
         } else {
           const { message } = await response.json();
           setStatusText(message);
