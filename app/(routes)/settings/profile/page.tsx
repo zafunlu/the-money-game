@@ -9,7 +9,7 @@ import {
   isValidName,
   isValidUsername,
 } from "@/app/utils/form-validators";
-import { PATCH, PUT } from "@/app/utils/http-client";
+import { PATCH } from "@/app/utils/http-client";
 import { fetchCurrentUser, selectCurrentUser } from "@/lib/features/users/usersSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useEffect, useState } from "react";

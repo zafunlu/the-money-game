@@ -12,11 +12,13 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useEffect, useState } from "react";
 import { Dialog } from "@/app/components/dialog/Dialog";
+import { selectCurrentUser } from "@/lib/features/users/usersSlice";
 
 export default function DashboardPage() {
   const dialogs = useAppSelector<any>((state) => state.dialogs);
   const dispatch = useAppDispatch();
   const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const user = useAppSelector(selectCurrentUser);
 
   useEffect(() => {
     const getDisclaimer = localStorage.getItem("disclaimer_acknowledged");

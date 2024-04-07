@@ -14,6 +14,8 @@ import { selectCurrentUser } from "@/lib/features/users/usersSlice";
 import { GoBackButton } from "../buttons/GoBackButton";
 import { useCustomerAuth } from "@/app/guards/CustomerAuthContext";
 import { CustomerNavigation } from "./CustomerNavigation";
+import { PATCH } from "@/app/utils/http-client";
+import { useSnackbar } from "../snackbar/snackbar-context";
 
 export function AppBar() {
   const [scrolled, setScrolled] = useState(false);
@@ -22,6 +24,7 @@ export function AppBar() {
   const currentUser = useAppSelector(selectCurrentUser);
   const { isLoggedIn: isLoggedInAsCustomer } = useCustomerAuth();
   const pendingTransactions = useAppSelector(selectPendingApprovals);
+  const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,46 +49,80 @@ export function AppBar() {
     setIsAppDrawerOpen(false);
   }
 
-  return (
-    <header className={scrolled ? "top-bar-container scrolled" : "top-bar-container"}>
-      <div className="leading-icon">
-        {shouldDisplayGoBack ? (
-          <GoBackButton>
-            <MatIcon icon="arrow-back" />
-          </GoBackButton>
-        ) : (
-          <button
-            className="icon relative group"
-            onClick={toggleDrawer}
-            aria-label="Navigation Menu Button"
-          >
-            <MatIcon icon="menu" />
-            {pendingTransactions.length > 0 && (
-              <span className="absolute top-1.5 left-1.5 flex h-4 w-4">
-                <span className="relative inline-flex rounded-full h-4 w-4 border-[3px] border-neutral group-hover:border-neutral-hover group-active:border-neutral-pressed bg-primary transition-colors duration-300 ease-in-out"></span>
-              </span>
-            )}
-          </button>
-        )}
+  async function resendAccountVerificationEmail(): Promise<void> {
+    try {
+      const response = await PATCH("/users/email/resend", { email: currentUser.email });
 
-        <AppDrawer isOpen={isAppDrawerOpen} closeDrawer={closeDrawer}>
-          <h1>Navigation</h1>
-          {!!currentUser ? (
-            <SignedInNavigation closeDrawer={closeDrawer} />
-          ) : isLoggedInAsCustomer ? (
-            <CustomerNavigation closeDrawer={closeDrawer} />
+      if (response.ok) {
+        showSnackbar(
+          "Check your email and follow the steps listed to verify your account",
+          "Dismiss",
+          8_000
+        );
+      } else {
+        const { message } = await response.json();
+        showSnackbar(message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  return (
+    <>
+      <header className={scrolled ? "top-bar-container scrolled" : "top-bar-container"}>
+        <div className="leading-icon">
+          {shouldDisplayGoBack ? (
+            <GoBackButton>
+              <MatIcon icon="arrow-back" />
+            </GoBackButton>
           ) : (
-            <DefaultNavigation closeDrawer={closeDrawer} />
+            <button
+              className="icon relative group"
+              onClick={toggleDrawer}
+              aria-label="Navigation Menu Button"
+            >
+              <MatIcon icon="menu" />
+              {pendingTransactions.length > 0 && (
+                <span className="absolute top-1.5 left-1.5 flex h-4 w-4">
+                  <span className="relative inline-flex rounded-full h-4 w-4 border-[3px] border-neutral group-hover:border-neutral-hover group-active:border-neutral-pressed bg-primary transition-colors duration-300 ease-in-out"></span>
+                </span>
+              )}
+            </button>
           )}
-        </AppDrawer>
-      </div>
-      <h1 className="headline">
-        <Link href={!!currentUser ? "/dashboard" : "/"}>
-          <ByteburyIcon className="w-5 h-5" />
-          Fun Banking
-        </Link>
-      </h1>
-      <div className="trailing-icon"></div>
-    </header>
+
+          <AppDrawer isOpen={isAppDrawerOpen} closeDrawer={closeDrawer}>
+            <h1>Navigation</h1>
+            {!!currentUser ? (
+              <SignedInNavigation closeDrawer={closeDrawer} />
+            ) : isLoggedInAsCustomer ? (
+              <CustomerNavigation closeDrawer={closeDrawer} />
+            ) : (
+              <DefaultNavigation closeDrawer={closeDrawer} />
+            )}
+          </AppDrawer>
+        </div>
+        <h1 className="headline">
+          <Link href={!!currentUser ? "/dashboard" : "/"}>
+            <ByteburyIcon className="w-5 h-5" />
+            Fun Banking
+          </Link>
+        </h1>
+        <div className="trailing-icon"></div>
+      </header>
+      {currentUser && !currentUser?.verified && (
+        <div className="bg-orange-100 p-4 mb-4 border-y border-orange-200 text-sm text-center">
+          Your account is not verified. You can not do any actions until you verify your e-mail.
+          Please check your e-mail and follow the directions to verify. If you do not see it,{" "}
+          <button
+            onClick={resendAccountVerificationEmail}
+            className="underline inline text-primary"
+          >
+            click here to resend it
+          </button>
+          .
+        </div>
+      )}
+    </>
   );
 }

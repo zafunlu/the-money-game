@@ -10,6 +10,7 @@ export type User = {
   last_seen?: Date;
   created_at: Date | string;
   updated_at: Date | string;
+  verified: boolean;
   subscription_tier: SubscriptionTier;
 };
 

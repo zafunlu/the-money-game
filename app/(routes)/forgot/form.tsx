@@ -11,7 +11,7 @@ export default function ForgotPasswordForm() {
   const { showSnackbar } = useSnackbar();
   const [formData, setFormData] = useState({ email: "" });
   const [isDisabled, setIsDisabled] = useState(false);
-  const formNameLabelMap = { email: "E-mail" };
+  const formNameLabelMap = { email: "Email" };
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
