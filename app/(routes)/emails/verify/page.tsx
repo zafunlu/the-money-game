@@ -18,7 +18,7 @@ function Page() {
         const response = await POST("/users/verify", { token });
 
         if (response.ok) {
-          router.push("/dashboard");
+          router.push("/signin");
         } else {
           const { message } = await response.json();
           setStatusText(message);
