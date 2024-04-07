@@ -1,10 +1,24 @@
+"use client";
+
 import { Card } from "@/app/components/card/Card";
 import ChangeEmailForm from "./ChangeEmailForm";
 import { ForgotPasswordForm } from "./ForgotPasswordForm";
+import { useAppSelector } from "@/lib/hooks";
+import { selectCurrentUser } from "@/lib/features/users/usersSlice";
 
 export default function SecuritySettingsPage() {
+  const user = useAppSelector(selectCurrentUser);
+
   return (
     <>
+      <Card type="outlined">
+        <section className="flex flex-col gap-2">
+          <h1>Security Information</h1>
+          <div>
+            Your e-mail: <strong>{user?.email.toLowerCase()}</strong>
+          </div>
+        </section>
+      </Card>
       <Card type="outlined">
         <section className="flex flex-col gap-2">
           <div>
