@@ -2,7 +2,7 @@
 
 import { POST } from "@/app/utils/http-client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 
 export default function VerifyEmailPage() {
   const searchParams = useSearchParams();
@@ -35,5 +35,9 @@ export default function VerifyEmailPage() {
     }
   }, [token, verify]);
 
-  return <div className="container">{statusText}</div>;
+  return (
+    <Suspense>
+      <div className="container">{statusText}</div>
+    </Suspense>
+  );
 }
