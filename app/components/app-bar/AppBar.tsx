@@ -121,8 +121,7 @@ export function AppBar() {
           >
             click here to resend it
           </button>
-          . Contact your
-          provider, or use a different e-mail address in the menu under{" "}
+          . You can change your e-mail in the menu under{" "}
           <strong>Settings &rarr; Security</strong>
         </div>
       )}
