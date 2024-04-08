@@ -113,7 +113,8 @@ export function AppBar() {
       {currentUser && !currentUser?.verified && (
         <div className="bg-orange-100 p-4 mb-4 border-y border-orange-200 text-sm text-center">
           Your account is not verified. You can not do any actions until you verify your e-mail.
-          Please check your e-mail and follow the directions to verify. If you do not see it,{" "}
+          Please check your e-mail and follow the directions to verify. If you do not see it, check
+          your <strong>spam folder</strong> or{" "}
           <button
             onClick={resendAccountVerificationEmail}
             className="underline inline text-primary"
