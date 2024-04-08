@@ -58,8 +58,9 @@ export default function ProfilePage() {
         </header>
         <div className="flex flex-col gap-4 mt-8">
           <section className="text-center">
-            <h1 className="text-2xl capitalize">
-              {user.first_name} {user.last_name}
+            <h1 className="text-2xl capitalize flex gap-2 justify-center items-center">
+              {user.first_name} {user.last_name}{" "}
+              {user.verified && <MatIcon className="text-blue-500" icon="verified" />}
             </h1>
             <div className="text-sm text-gray-500 mb-2">@{user.username}</div>
             <div className="flex gap-2 justify-center">

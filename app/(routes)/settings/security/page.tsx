@@ -5,6 +5,7 @@ import ChangeEmailForm from "./ChangeEmailForm";
 import { ForgotPasswordForm } from "./ForgotPasswordForm";
 import { useAppSelector } from "@/lib/hooks";
 import { selectCurrentUser } from "@/lib/features/users/usersSlice";
+import { MatIcon } from "@/app/components/icons/MatIcon";
 
 export default function SecuritySettingsPage() {
   const user = useAppSelector(selectCurrentUser);
@@ -15,7 +16,13 @@ export default function SecuritySettingsPage() {
         <section className="flex flex-col gap-2">
           <h1>Security Information</h1>
           <div>
-            Your e-mail: <strong>{user?.email.toLowerCase()}</strong>
+            Your e-mail:{" "}
+            <div className="inline-flex gap-1 items-center">
+              <strong>{user?.email.toLowerCase()}</strong>
+              {user.verified && (
+                <MatIcon className="text-blue-500" width={16} height={16} icon="verified" />
+              )}
+            </div>
           </div>
         </section>
       </Card>

@@ -120,7 +120,9 @@ export function AppBar() {
           >
             click here to resend it
           </button>
-          .
+          . It is also possible that your e-mail provider is blocking our e-mails. Contact your
+          provider, or use a different e-mail address in the menu under{" "}
+          <strong>Settings &rarr; Security</strong>
         </div>
       )}
     </>
