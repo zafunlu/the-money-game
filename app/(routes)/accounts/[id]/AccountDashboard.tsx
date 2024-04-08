@@ -1,7 +1,7 @@
 "use client";
 
 import { Card } from "@/app/components/card/Card";
-import { formatCurrency, formatDate } from "@/app/utils/formatters";
+import { constructDate, formatCurrency, formatDate } from "@/app/utils/formatters";
 import { TransferMoneyDialog } from "../../banks/[id]/dialogs/TransferMoneyDialog";
 import { RecentTransactions } from "./RecentTransactions";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -144,8 +144,9 @@ export function AccountDashboard({ account }: AccountDashboardProps) {
         <Notice icon="receipt-long-outline" type="info">
           <div className="flex justify-between w-full items-center">
             <div>You have a bank statement ready from last month!</div>
+            console.log()
             <PDFDownloadLink
-              fileName={`${formatDate(new Date(`${statementYear}-${statementMonth}`), {
+              fileName={`${formatDate(constructDate(statementYear, statementMonth))}, {
                 month: "long",
                 year: "numeric",
                 day: undefined,

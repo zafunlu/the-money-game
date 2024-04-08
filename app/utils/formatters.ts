@@ -1,5 +1,9 @@
 import { marked } from "marked";
 
+export const constructDate = (year: number, month: number): Date => {
+  return new Date(year, month - 1);
+};
+
 export const formatDate = (date: Date | string, dateOptions?: any) => {
   dateOptions = {
     year: "numeric",
