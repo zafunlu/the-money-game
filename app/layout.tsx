@@ -6,7 +6,6 @@ import { Footer } from "./components/footer/Footer";
 import SnackbarContextProvider from "./components/snackbar/snackbar-context";
 import AuthContextProvider from "./guards/AuthContext";
 import StoreProvider from "./StoreProvider";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import CustomerAuthContextProvider from "./guards/CustomerAuthContext";
 import Script from "next/script";
 import { script as gtagScript } from "../public/gtag";
@@ -26,7 +25,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2044180719717177"
           crossOrigin="anonymous"
         ></script>
-        <meta name="monetag" content="e6af2b0dc39220485e7231c64ea8a005"></meta>
       </head>
       <body className="pt-[66px]">
         <StoreProvider>
@@ -42,7 +40,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </CustomerAuthContextProvider>
           </SnackbarContextProvider>
         </StoreProvider>
-        <SpeedInsights />
         <Script
           id="gtag_manager"
           async
