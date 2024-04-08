@@ -112,7 +112,7 @@ export function AppBar() {
       </header>
       {currentUser && !currentUser?.verified && (
         <div className="bg-orange-100 p-4 mb-4 border-y border-orange-200 text-sm text-center">
-          Actions require e-mail verification.
+          We require e-mail verification.
           Check your e-mail and follow the directions. If not found, check
           your <strong>spam folder</strong> or{" "}
           <button
