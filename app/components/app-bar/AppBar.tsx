@@ -112,8 +112,8 @@ export function AppBar() {
       </header>
       {currentUser && !currentUser?.verified && (
         <div className="bg-orange-100 p-4 mb-4 border-y border-orange-200 text-sm text-center">
-          Your account is not verified. You can not do any actions until you verify your e-mail.
-          Please check your e-mail and follow the directions to verify. If you do not see it, check
+          You can not do any actions until you verify your e-mail.
+          Check your e-mail and follow the directions. If you do not see it, check
           your <strong>spam folder</strong> or{" "}
           <button
             onClick={resendAccountVerificationEmail}
@@ -121,7 +121,7 @@ export function AppBar() {
           >
             click here to resend it
           </button>
-          . It is also possible that your e-mail provider is blocking our e-mails. Contact your
+          . Contact your
           provider, or use a different e-mail address in the menu under{" "}
           <strong>Settings &rarr; Security</strong>
         </div>
