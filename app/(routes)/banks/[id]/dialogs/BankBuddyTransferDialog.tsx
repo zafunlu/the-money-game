@@ -63,8 +63,6 @@ export function BankBuddyTransferDialog() {
   function validateField(name: keyof typeof formData, value: string) {
     const errors = { ...formErrors };
 
-    console.log(value);
-
     if (!value) {
       setFormErrors({ ...formErrors, [name]: "" });
       return;

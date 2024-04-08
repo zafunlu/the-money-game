@@ -9,6 +9,7 @@ import StoreProvider from "./StoreProvider";
 import CustomerAuthContextProvider from "./guards/CustomerAuthContext";
 import Script from "next/script";
 import { script as gtagScript } from "../public/gtag";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Fun Banking | Your Online Banking Simulator",
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </CustomerAuthContextProvider>
           </SnackbarContextProvider>
         </StoreProvider>
+        <SpeedInsights />
         <Script
           id="gtag_manager"
           async

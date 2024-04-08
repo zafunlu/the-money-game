@@ -144,7 +144,6 @@ export function AccountDashboard({ account }: AccountDashboardProps) {
         <Notice icon="receipt-long-outline" type="info">
           <div className="flex justify-between w-full items-center">
             <div>You have a bank statement ready from last month!</div>
-            console.log()
             <PDFDownloadLink
               fileName={`${formatDate(constructDate(statementYear, statementMonth))}, {
                 month: "long",
