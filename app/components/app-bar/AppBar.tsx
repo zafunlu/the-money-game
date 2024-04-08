@@ -112,16 +112,16 @@ export function AppBar() {
       </header>
       {currentUser && !currentUser?.verified && (
         <div className="bg-orange-100 p-4 mb-4 border-y border-orange-200 text-sm text-center">
-          You can not do any actions until you verify your e-mail.
-          Check your e-mail and follow the directions. If you do not see it, check
+          Actions require e-mail verification.
+          Check your e-mail and follow the directions. If not found, check
           your <strong>spam folder</strong> or{" "}
           <button
             onClick={resendAccountVerificationEmail}
             className="underline inline text-primary"
           >
-            click here to resend it
+            click to resend it
           </button>
-          . You can change your e-mail in the menu under{" "}
+          . You can change your e-mail in {" "}
           <strong>Settings &rarr; Security</strong>
         </div>
       )}
