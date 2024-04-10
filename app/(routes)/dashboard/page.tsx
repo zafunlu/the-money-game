@@ -141,3 +141,13 @@ export default function DashboardPage() {
     </AuthenticatedGuard>
   );
 }
+
+declare global {
+  namespace JSX {
+    // Define an interface to extend the IntrinsicElements interface
+    interface IntrinsicElements {
+      // Declare 'stripe-buy-button' as a valid JSX element
+      "stripe-buy-button": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    }
+  }
+}
