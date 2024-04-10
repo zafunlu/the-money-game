@@ -10,15 +10,14 @@ import { BankList } from "./BankList";
 import { CreateBankDialog } from "./CreateBankDialog";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Dialog } from "@/app/components/dialog/Dialog";
-import { selectCurrentUser } from "@/lib/features/users/usersSlice";
 
 export default function DashboardPage() {
   const dialogs = useAppSelector<any>((state) => state.dialogs);
   const dispatch = useAppDispatch();
   const [showDisclaimer, setShowDisclaimer] = useState(false);
-  const user = useAppSelector(selectCurrentUser);
+  const stripeDonateButtonRef = useRef(null);
 
   useEffect(() => {
     const getDisclaimer = localStorage.getItem("disclaimer_acknowledged");
@@ -27,6 +26,10 @@ export default function DashboardPage() {
       setShowDisclaimer(true);
     }
   }, []);
+
+  useEffect(() => {
+    console.log(stripeDonateButtonRef.current);
+  });
 
   function acknowledge(): void {
     localStorage.setItem("disclaimer_acknowledged", "true");
@@ -100,6 +103,13 @@ export default function DashboardPage() {
               <Card className="flex flex-col gap-2 w-full xl:w-80" type="outlined">
                 <h2 className="text-lg font-extrabold">Latest News</h2>
                 <AnnouncementList />
+              </Card>
+              <Card className="flex justify-center w-full xl:w-80" type="outlined">
+                <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+                <stripe-buy-button
+                  buy-button-id="buy_btn_1P3pnDGMl6AXhjIByDOFJla8"
+                  publishable-key="pk_live_51P2QWdGMl6AXhjIBhWUcc49kgQ4kBeD2RajYoTndwo7sSXDQ2zq8qGPjPzU8zubz0AvWzPqNUdKY0xvLM1wNabtk008k2QiwzR"
+                ></stripe-buy-button>
               </Card>
             </div>
           </div>
