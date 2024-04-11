@@ -45,6 +45,10 @@ body {
   background: var(--neutral);
 }
 
+a.premium-link {
+  @apply text-indigo-600 font-bold;
+}
+
 @layer utilities {
   h1 {
     @apply font-extrabold;

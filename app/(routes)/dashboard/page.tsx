@@ -10,14 +10,21 @@ import { BankList } from "./BankList";
 import { CreateBankDialog } from "./CreateBankDialog";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog } from "@/app/components/dialog/Dialog";
+import { selectFeatures } from "@/lib/features/config/configSlice";
+import { StoreList } from "./StoreList";
+import { selectCurrentUser } from "@/lib/features/users/usersSlice";
+import { SubscriptionTier } from "@/lib/models/User";
+import { PremiumButton } from "@/app/components/buttons/PremiumButton";
+import { HelpText } from "@/app/components/help-text/HelpText";
 
 export default function DashboardPage() {
+  const features = useAppSelector(selectFeatures);
+  const user = useAppSelector(selectCurrentUser);
   const dialogs = useAppSelector<any>((state) => state.dialogs);
   const dispatch = useAppDispatch();
   const [showDisclaimer, setShowDisclaimer] = useState(false);
-  const stripeDonateButtonRef = useRef(null);
 
   useEffect(() => {
     const getDisclaimer = localStorage.getItem("disclaimer_acknowledged");
@@ -26,10 +33,6 @@ export default function DashboardPage() {
       setShowDisclaimer(true);
     }
   }, []);
-
-  useEffect(() => {
-    console.log(stripeDonateButtonRef.current);
-  });
 
   function acknowledge(): void {
     localStorage.setItem("disclaimer_acknowledged", "true");
@@ -45,7 +48,7 @@ export default function DashboardPage() {
       <main className="container max-w-7xl h-full">
         <div className="flex flex-col md:flex-row gap-4">
           {/* left-hand side */}
-          <div>
+          <div className="flex flex-col gap-4">
             <Card type="outlined" className="flex flex-col gap-4 w-full md:w-72 shrink-0">
               <section className="flex items-center justify-between">
                 <h1>Banks</h1>
@@ -59,6 +62,26 @@ export default function DashboardPage() {
                 <BankList />
               </nav>
             </Card>
+            {features?.stores && (
+              <Card type="outlined" className="flex flex-col gap-4 w-full md:w-72 shrink-0">
+                <section className="flex items-center justify-between">
+                  <h1 className="flex items-center gap-1">
+                    Stores <HelpText size={20}>A place where customers can purchase items</HelpText>
+                  </h1>
+                  {user.subscription_tier < SubscriptionTier.Premium ? (
+                    <PremiumButton>Get Premium</PremiumButton>
+                  ) : (
+                    <button onClick={openCreateBankDialog} className="sm common filled">
+                      <MatIcon icon="add" />
+                      New
+                    </button>
+                  )}
+                </section>
+                <nav>
+                  <StoreList />
+                </nav>
+              </Card>
+            )}
           </div>
           {/* right-hand side */}
           <div className="flex flex-col xl:flex-row gap-4">

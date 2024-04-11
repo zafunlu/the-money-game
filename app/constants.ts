@@ -10,12 +10,13 @@ type bankLimits = {
   employees: number;
   customers: number;
   accounts: number;
-  storeFronts: number;
+  stores: number;
 };
 
 export type FeatureFlags = {
   ads: boolean;
   account_transfers: boolean;
+  stores: boolean;
 };
 
 export type BankConfig = {

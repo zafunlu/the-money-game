@@ -49,6 +49,8 @@ export type Icon =
   | "send-money"
   | "verified"
   | "animation"
+  | "workspace-premium-outline"
+  | "help-outline"
   | "share-windows";
 
 type MatIconParams = {
