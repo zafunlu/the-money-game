@@ -1,5 +1,6 @@
 "use client";
 
+import { Card } from "@/app/components/card/Card";
 import { MatIcon } from "@/app/components/icons/MatIcon";
 import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import {
@@ -142,7 +143,7 @@ export default function ProfileSettingsPage() {
   }
 
   return (
-    <>
+    <Card className="flex flex-col gap-4" type="outlined">
       <div>
         <h1>Profile Settings</h1>
         <p className="text-gray-500 text-sm">
@@ -239,6 +240,6 @@ export default function ProfileSettingsPage() {
           <input className="common ghost" type="reset" value="Cancel" />
         </div>
       </form>
-    </>
+    </Card>
   );
 }
