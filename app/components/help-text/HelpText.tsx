@@ -16,7 +16,6 @@ export function HelpText({ children, size }: any) {
         tooltipElement.classList.add("w-fit");
         tooltipElement.classList.remove("w-44");
       }
-      console.log(tooltipElement);
     }
   }, [tooltip]);
 
