@@ -1,26 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { MatIcon } from "../icons/MatIcon";
 import "./AppBar.scss";
-import { ByteburyIcon } from "../icons/ByteburyIcon";
-import Link from "next/link";
+
+import { useEffect, useState } from "react";
+
 import { AppDrawer } from "../app-drawer/AppDrawer";
-import { DefaultNavigation } from "./DefaultNavigation";
-import { SignedInNavigation } from "./SignedInNavigation";
-import { useAppSelector } from "@/lib/hooks";
-import { selectPendingApprovals } from "@/lib/features/pending-transactions/pendingTransactionsSlice";
-import { selectCurrentUser } from "@/lib/features/users/usersSlice";
-import { GoBackButton } from "../buttons/GoBackButton";
-import { useCustomerAuth } from "@/app/guards/CustomerAuthContext";
+import { ByteburyIcon } from "../icons/ByteburyIcon";
 import { CustomerNavigation } from "./CustomerNavigation";
+import { DefaultNavigation } from "./DefaultNavigation";
+import { GoBackButton } from "../buttons/GoBackButton";
+import Link from "next/link";
+import { MatIcon } from "../icons/MatIcon";
 import { PATCH } from "@/app/utils/http-client";
+import { SignedInNavigation } from "./SignedInNavigation";
+import { selectCurrentUser } from "@/lib/features/users/usersSlice";
+import { selectPendingApprovals } from "@/lib/features/pending-transactions/pendingTransactionsSlice";
+import { useAppSelector } from "@/lib/hooks";
+import { useCustomerAuth } from "@/app/guards/CustomerAuthContext";
 import { useSnackbar } from "../snackbar/snackbar-context";
 
 export function AppBar() {
   const [scrolled, setScrolled] = useState(false);
   const [isAppDrawerOpen, setIsAppDrawerOpen] = useState(false);
-  const shouldDisplayGoBack = useAppSelector((state) => state.appBar.shouldDisplayGoBack);
+  const shouldDisplayGoBack = useAppSelector(
+    (state) => state.appBar.shouldDisplayGoBack
+  );
   const currentUser = useAppSelector(selectCurrentUser);
   const { isLoggedIn: isLoggedInAsCustomer } = useCustomerAuth();
   const pendingTransactions = useAppSelector(selectPendingApprovals);
@@ -51,7 +55,9 @@ export function AppBar() {
 
   async function resendAccountVerificationEmail(): Promise<void> {
     try {
-      const response = await PATCH("/users/email/resend", { email: currentUser.email });
+      const response = await PATCH("/users/email/resend", {
+        email: currentUser.email,
+      });
 
       if (response.ok) {
         showSnackbar(
@@ -70,7 +76,11 @@ export function AppBar() {
 
   return (
     <>
-      <header className={scrolled ? "top-bar-container scrolled" : "top-bar-container"}>
+      <header
+        className={
+          scrolled ? "top-bar-container scrolled" : "top-bar-container"
+        }
+      >
         <div className="leading-icon">
           {shouldDisplayGoBack ? (
             <GoBackButton>
@@ -105,23 +115,22 @@ export function AppBar() {
         <h1 className="headline">
           <Link href={!!currentUser ? "/dashboard" : "/"}>
             <ByteburyIcon className="w-5 h-5" />
-            Fun Banking
+            The Money Game
           </Link>
         </h1>
         <div className="trailing-icon"></div>
       </header>
       {currentUser && !currentUser?.verified && (
         <div className="bg-orange-100 p-4 mb-4 border-y border-orange-200 text-sm text-center">
-          We require e-mail verification.
-          Check your e-mail and follow the directions. If not found, check
-          your <strong>spam folder</strong> or{" "}
+          We require e-mail verification. Check your e-mail and follow the
+          directions. If not found, check your <strong>spam folder</strong> or{" "}
           <button
             onClick={resendAccountVerificationEmail}
             className="underline inline text-primary"
           >
             click to resend it
           </button>
-          . You can change your e-mail in {" "}
+          . You can change your e-mail in{" "}
           <strong>Settings &rarr; Security</strong>
         </div>
       )}
