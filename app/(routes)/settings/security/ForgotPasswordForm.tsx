@@ -1,10 +1,10 @@
 "use client";
 
-import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { ErrorMessages } from "@/app/constants/error-messages";
 import { POST } from "@/app/utils/http-client";
 import { selectCurrentUser } from "@/lib/features/users/usersSlice";
 import { useAppSelector } from "@/lib/hooks";
+import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { useState } from "react";
 
 export function ForgotPasswordForm() {
@@ -26,8 +26,8 @@ export function ForgotPasswordForm() {
       }
 
       showSnackbar(
-        "We have sent an e-mail to that address if it exists in our system. Please check your Junk folder if you do not see an e-mail in the next 5 minutes.",
-        "Dismiss",
+        "We hebben een e-mail naar dat adres gestuurd als het in ons systeem bestaat. Controleer je spamfolder als je binnen de volgende 5 minuten geen e-mail ziet.",
+        "Sluiten",
         15_000
       );
     } catch (error) {
@@ -45,7 +45,7 @@ export function ForgotPasswordForm() {
         disabled={!user?.verified || loading}
         onClick={sendPasswordResetInstructions}
       >
-        Send Reset Instructions
+        Stuur instructies om wachtwoord te resetten
       </button>
     </div>
   );

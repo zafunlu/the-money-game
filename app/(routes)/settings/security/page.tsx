@@ -3,9 +3,9 @@
 import { Card } from "@/app/components/card/Card";
 import ChangeEmailForm from "./ChangeEmailForm";
 import { ForgotPasswordForm } from "./ForgotPasswordForm";
-import { useAppSelector } from "@/lib/hooks";
-import { selectCurrentUser } from "@/lib/features/users/usersSlice";
 import { MatIcon } from "@/app/components/icons/MatIcon";
+import { selectCurrentUser } from "@/lib/features/users/usersSlice";
+import { useAppSelector } from "@/lib/hooks";
 
 export default function SecuritySettingsPage() {
   const user = useAppSelector(selectCurrentUser);
@@ -14,13 +14,18 @@ export default function SecuritySettingsPage() {
     <>
       <Card type="outlined">
         <section className="flex flex-col gap-2">
-          <h1>Security Information</h1>
+          <h1>Beveiligingsinformatie</h1>
           <div>
-            Your e-mail:{" "}
+            Je e-mail:{" "}
             <div className="inline-flex gap-1 items-center">
               <strong>{user?.email.toLowerCase()}</strong>
               {user.verified && (
-                <MatIcon className="text-blue-500" width={16} height={16} icon="verified" />
+                <MatIcon
+                  className="text-blue-500"
+                  width={16}
+                  height={16}
+                  icon="verified"
+                />
               )}
             </div>
           </div>
@@ -29,12 +34,13 @@ export default function SecuritySettingsPage() {
       <Card type="outlined">
         <section className="flex flex-col gap-2">
           <div>
-            <h1>Change Your E-mail</h1>
+            <h1>Wijzig je e-mail</h1>
             <p className="text-gray-500 text-sm">
-              After you submit you will recieve an e-mail for verification. You{" "}
-              <strong>will need to verify</strong> your new e-mail to continue working with Fun
-              Banking. If you do not recieve an e-mail, check your spam, or check your e-mail
-              providers policy on recieving external e-mails.
+              Nadat je dit indient, ontvang je een e-mail voor verificatie. Je{" "}
+              <strong>moet je nieuwe e-mail verifiëren</strong> om verder te
+              gaan met The Money Game. Als je geen e-mail ontvangt, controleer
+              dan je spam of controleer het beleid van je e-mailprovider over
+              het ontvangen van externe e-mails.
             </p>
           </div>
           <ChangeEmailForm />
@@ -43,10 +49,11 @@ export default function SecuritySettingsPage() {
       <Card type="outlined">
         <section className="flex flex-col gap-2">
           <div>
-            <h1>Password Reset</h1>
+            <h1>Wachtwoord resetten</h1>
             <p className="text-gray-500 text-sm">
-              Clicking the button below will send you an e-mail with instructions on how to reset
-              your password. Your e-mail must be verified before you can do this.
+              Klikken op de onderstaande knop stuurt je een e-mail met
+              instructies om je wachtwoord te resetten. Je e-mail moet
+              geverifieerd zijn voordat je dit kunt doen.
             </p>
           </div>
           <ForgotPasswordForm />

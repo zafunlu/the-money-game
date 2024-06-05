@@ -1,8 +1,5 @@
 "use client";
 
-import { Card } from "@/app/components/card/Card";
-import { MatIcon } from "@/app/components/icons/MatIcon";
-import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import {
   INVALID_NAME_MESSAGE,
   INVALID_USERNAME_MESSAGE,
@@ -10,10 +7,17 @@ import {
   isValidName,
   isValidUsername,
 } from "@/app/utils/form-validators";
-import { PATCH } from "@/app/utils/http-client";
-import { fetchCurrentUser, selectCurrentUser } from "@/lib/features/users/usersSlice";
+import {
+  fetchCurrentUser,
+  selectCurrentUser,
+} from "@/lib/features/users/usersSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useEffect, useState } from "react";
+
+import { Card } from "@/app/components/card/Card";
+import { MatIcon } from "@/app/components/icons/MatIcon";
+import { PATCH } from "@/app/utils/http-client";
+import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 
 export default function ProfileSettingsPage() {
   const dispatch = useAppDispatch();
@@ -51,7 +55,10 @@ export default function ProfileSettingsPage() {
   function previewImage(file: File): void {
     const reader = new FileReader();
     reader.onload = () => {
-      setFormData((previous: any) => ({ ...previous, avatar: reader.result as string }));
+      setFormData((previous: any) => ({
+        ...previous,
+        avatar: reader.result as string,
+      }));
     };
 
     if (file) {
@@ -65,7 +72,7 @@ export default function ProfileSettingsPage() {
     const maxSize = 100 * 1024; // 100KB
 
     if (fileList && fileList[0].size > maxSize) {
-      alert("File is too large. Maximum size is 100KB.");
+      alert("Bestand is te groot. Maximale grootte is 100KB.");
       return; // Exit the function if the file is too large
     }
 
@@ -92,10 +99,12 @@ export default function ProfileSettingsPage() {
     switch (name) {
       case "firstName":
       case "lastName":
-        errors[name] = isValidName(value) ? "" : `Name ${INVALID_NAME_MESSAGE}`;
+        errors[name] = isValidName(value) ? "" : `Naam ${INVALID_NAME_MESSAGE}`;
         break;
       case "username":
-        errors[name] = isValidUsername(value) ? "" : `Username ${INVALID_USERNAME_MESSAGE}`;
+        errors[name] = isValidUsername(value)
+          ? ""
+          : `Gebruikersnaam ${INVALID_USERNAME_MESSAGE}`;
         break;
     }
 
@@ -105,7 +114,10 @@ export default function ProfileSettingsPage() {
   function isInvalid(): boolean {
     const requiredFields = { ...formData };
     delete requiredFields.about;
-    return Object.values(requiredFields).some((value) => !value) || hasErrors(formErrors);
+    return (
+      Object.values(requiredFields).some((value) => !value) ||
+      hasErrors(formErrors)
+    );
   }
 
   async function updateUser(event: any): Promise<void> {
@@ -126,7 +138,7 @@ export default function ProfileSettingsPage() {
 
       if (response.ok) {
         dispatch(fetchCurrentUser());
-        showSnackbar("Successfully updated your profile information");
+        showSnackbar("Je profielinformatie is succesvol bijgewerkt");
       } else {
         const { message } = await response.json();
         showSnackbar(message);
@@ -139,21 +151,25 @@ export default function ProfileSettingsPage() {
   }
 
   if (!currentUser) {
-    return <section>Loading...</section>;
+    return <section>Laden...</section>;
   }
 
   return (
     <Card className="flex flex-col gap-4" type="outlined">
       <div>
-        <h1>Profile Settings</h1>
+        <h1>Profielinstellingen</h1>
         <p className="text-gray-500 text-sm">
-          You can update information about yourself here. Please note that anything you enter here
-          can be viewed by the public.
+          Hier kun je informatie over jezelf bijwerken. Let op dat alles wat je
+          hier invoert door het publiek kan worden bekeken.
         </p>
       </div>
       <form className="flex flex-col gap-2" onSubmit={updateUser}>
         <div className="flex items-end gap-4 mb-3 relative w-24">
-          <img src={formData.avatar} alt="image preview" className="w-24 h-24 rounded-full" />
+          <img
+            src={formData.avatar}
+            alt="afbeelding voorbeeld"
+            className="w-24 h-24 rounded-full"
+          />
           <div className="absolute -right-5 -bottom-4">
             <input
               type="file"
@@ -172,7 +188,7 @@ export default function ProfileSettingsPage() {
         </div>
         <div className="flex gap-4 form-group">
           <div className={`form-field ${formErrors.firstName && "error"}`}>
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="firstName">Voornaam</label>
             <input
               id="firstName"
               name="firstName"
@@ -187,7 +203,7 @@ export default function ProfileSettingsPage() {
             <div className="error-message">{formErrors.firstName}</div>
           </div>
           <div className={`form-field ${formErrors.lastName && "error"}`}>
-            <label htmlFor="lastName">Last Name</label>
+            <label htmlFor="lastName">Achternaam</label>
             <input
               id="lastName"
               name="lastName"
@@ -203,7 +219,7 @@ export default function ProfileSettingsPage() {
           </div>
         </div>
         <div className={`form-field ${formErrors.username && "error"}`}>
-          <label htmlFor="username">Username</label>
+          <label htmlFor="username">Gebruikersnaam</label>
           <input
             id="username"
             name="username"
@@ -218,7 +234,7 @@ export default function ProfileSettingsPage() {
           <div className="error-message">{formErrors.username}</div>
         </div>
         <div className={`form-field ${formErrors.about && "error"}`}>
-          <label htmlFor="about">About</label>
+          <label htmlFor="about">Over jou</label>
           <textarea
             id="about"
             name="about"
@@ -226,7 +242,7 @@ export default function ProfileSettingsPage() {
             maxLength={500}
             onChange={handleChange}
             rows={8}
-            placeholder="Enter some information about yourself"
+            placeholder="Vertel wat over jezelf.."
           ></textarea>
           <div className="error-message">{formErrors.about}</div>
         </div>
@@ -234,10 +250,10 @@ export default function ProfileSettingsPage() {
           <input
             className="common filled"
             type="submit"
-            value="Save Changes"
+            value="Wijzigingen opslaan"
             disabled={isInvalid() || isDisabled}
           />
-          <input className="common ghost" type="reset" value="Cancel" />
+          <input className="common ghost" type="reset" value="Annuleren" />
         </div>
       </form>
     </Card>

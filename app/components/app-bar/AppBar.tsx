@@ -61,8 +61,8 @@ export function AppBar() {
 
       if (response.ok) {
         showSnackbar(
-          "Check your email and follow the steps listed to verify your account",
-          "Dismiss",
+          "Controleer je e-mail en volg de stappen om je account te verifiëren",
+          "Sluiten",
           8_000
         );
       } else {
@@ -90,7 +90,7 @@ export function AppBar() {
             <button
               className="icon relative group"
               onClick={toggleDrawer}
-              aria-label="Navigation Menu Button"
+              aria-label="Navigatie menu knop"
             >
               <MatIcon icon="menu" />
               {pendingTransactions.length > 0 && (
@@ -102,7 +102,7 @@ export function AppBar() {
           )}
 
           <AppDrawer isOpen={isAppDrawerOpen} closeDrawer={closeDrawer}>
-            <h1>Navigation</h1>
+            <h1>Navigatie</h1>
             {!!currentUser ? (
               <SignedInNavigation closeDrawer={closeDrawer} />
             ) : isLoggedInAsCustomer ? (
@@ -122,16 +122,17 @@ export function AppBar() {
       </header>
       {currentUser && !currentUser?.verified && (
         <div className="bg-orange-100 p-4 mb-4 border-y border-orange-200 text-sm text-center">
-          We require e-mail verification. Check your e-mail and follow the
-          directions. If not found, check your <strong>spam folder</strong> or{" "}
+          We vereisen e-mailverificatie. Controleer je e-mail en volg de
+          aanwijzingen. Als je niets vindt, controleer je{" "}
+          <strong>spamfolder</strong> of{" "}
           <button
             onClick={resendAccountVerificationEmail}
             className="underline inline text-primary"
           >
-            click to resend it
+            klik om opnieuw te verzenden
           </button>
-          . You can change your e-mail in{" "}
-          <strong>Settings &rarr; Security</strong>
+          . Je kunt je e-mail wijzigen in{" "}
+          <strong>Instellingen &rarr; Beveiliging</strong>
         </div>
       )}
     </>

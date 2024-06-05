@@ -1,17 +1,18 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { MatIcon } from "../icons/MatIcon";
-import { useAuth } from "@/app/guards/AuthContext";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Dispatch, useEffect } from "react";
 import {
   fetchApprovals,
   selectPendingApprovals,
 } from "@/lib/features/pending-transactions/pendingTransactionsSlice";
-import { selectCurrentUser } from "@/lib/features/users/usersSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+
+import Link from "next/link";
+import { MatIcon } from "../icons/MatIcon";
 import { UserRole } from "@/lib/models/User";
+import { selectCurrentUser } from "@/lib/features/users/usersSlice";
+import { useAuth } from "@/app/guards/AuthContext";
+import { usePathname } from "next/navigation";
 
 type SignedInNavigationProps = { closeDrawer: () => void };
 
@@ -73,7 +74,7 @@ export function SignedInNavigation({ closeDrawer }: SignedInNavigationProps) {
           >
             <div>
               <MatIcon icon="inactive-order-outline" />
-              Pending Approvals
+              In afwachting van goedkeuring
             </div>
             <aside>{pendingTransactions.length}</aside>
           </Link>
@@ -86,7 +87,7 @@ export function SignedInNavigation({ closeDrawer }: SignedInNavigationProps) {
           >
             <div>
               <MatIcon icon="account-circle" />
-              Profile
+              Profiel
             </div>
           </Link>
         </li>
@@ -96,7 +97,7 @@ export function SignedInNavigation({ closeDrawer }: SignedInNavigationProps) {
               <summary>
                 <div>
                   <MatIcon icon="terminal" />
-                  Control Panel
+                  Controlepaneel
                 </div>
               </summary>
               <ul>
@@ -108,14 +109,16 @@ export function SignedInNavigation({ closeDrawer }: SignedInNavigationProps) {
                   >
                     <div>
                       <MatIcon icon="analytics-outline" />
-                      Application Info
+                      Applicatie info
                     </div>
                   </Link>
                 </li>
                 <li>
                   <Link
                     href={`/control/users`}
-                    className={`${pathname === "/control/users" ? "active" : ""}`}
+                    className={`${
+                      pathname === "/control/users" ? "active" : ""
+                    }`}
                     onClick={closeDrawer}
                   >
                     <div>
@@ -127,7 +130,11 @@ export function SignedInNavigation({ closeDrawer }: SignedInNavigationProps) {
                 <li>
                   <Link
                     href={`/control/announcements`}
-                    className={`${pathname.includes("/control/announcements") ? "active" : ""}`}
+                    className={`${
+                      pathname.includes("/control/announcements")
+                        ? "active"
+                        : ""
+                    }`}
                     onClick={closeDrawer}
                   >
                     <div>
@@ -145,26 +152,30 @@ export function SignedInNavigation({ closeDrawer }: SignedInNavigationProps) {
             <summary>
               <div>
                 <MatIcon icon="settings-outline" />
-                Settings
+                Instellingen
               </div>
             </summary>
             <ul>
               <li>
                 <Link
                   href={`/settings/profile`}
-                  className={`${pathname === "/settings/profile" ? "active" : ""}`}
+                  className={`${
+                    pathname === "/settings/profile" ? "active" : ""
+                  }`}
                   onClick={closeDrawer}
                 >
                   <div>
                     <MatIcon icon="settings-account-box-outline" />
-                    Profile
+                    Profiel
                   </div>
                 </Link>
               </li>
               <li>
                 <Link
                   href={`/settings/security`}
-                  className={`${pathname === "/settings/security" ? "active" : ""}`}
+                  className={`${
+                    pathname === "/settings/security" ? "active" : ""
+                  }`}
                   onClick={closeDrawer}
                 >
                   <div>
@@ -185,7 +196,7 @@ export function SignedInNavigation({ closeDrawer }: SignedInNavigationProps) {
           >
             <div>
               <MatIcon icon="logout" />
-              Logout
+              Uitloggen
             </div>
           </button>
         </li>

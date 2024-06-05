@@ -1,9 +1,9 @@
 "use client";
 
-import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { PATCH } from "@/app/utils/http-client";
 import { fetchCurrentUser } from "@/lib/features/users/usersSlice";
 import { useAppDispatch } from "@/lib/hooks";
+import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { useState } from "react";
 
 export default function ChangeEmailForm() {
@@ -30,7 +30,9 @@ export default function ChangeEmailForm() {
       if (response.ok) {
         setFormData(initialFormData);
         dispatch(fetchCurrentUser());
-        showSnackbar("Successfully sent a verification e-mail to that provided e-mail");
+        showSnackbar(
+          "Successfully sent a verification e-mail to that provided e-mail"
+        );
       } else {
         const { message } = await response.json();
         showSnackbar(message);
@@ -45,13 +47,13 @@ export default function ChangeEmailForm() {
   return (
     <form className="flex flex-col gap-4" onSubmit={submitChangeEmail}>
       <div className="form-field">
-        <label htmlFor="change-email-email">New Email</label>
+        <label htmlFor="change-email-email">Nieuwe e-mailadres</label>
         <input
           id="change-email-email"
           name="email"
           type="email"
           inputMode="email"
-          placeholder="New Email"
+          placeholder="Nieuwe e-mailadres"
           onChange={handleChange}
           value={formData.email}
           required
@@ -59,12 +61,12 @@ export default function ChangeEmailForm() {
       </div>
       <div className="flex gap-2">
         <input
-          value="Change E-mail"
+          value="Wijzig e-mailadres"
           className="common filled"
           type="submit"
           disabled={!formData.email || disableSubmit}
         />
-        <input value="Cancel" className="common ghost" type="reset" />
+        <input value="Annuleren" className="common ghost" type="reset" />
       </div>
     </form>
   );
