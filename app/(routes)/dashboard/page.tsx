@@ -1,16 +1,13 @@
 "use client";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { useEffect, useState } from "react";
 
-import { AnnouncementList } from "./AnnouncementList";
 import { AuthenticatedGuard } from "@/app/guards/AuthGuard";
 import { BankList } from "./BankList";
 import { Card } from "@/app/components/card/Card";
 import { CreateBankDialog } from "./CreateBankDialog";
 import { Dialog } from "@/app/components/dialog/Dialog";
 import { HelpText } from "@/app/components/help-text/HelpText";
-import Link from "next/link";
 import { MatIcon } from "@/app/components/icons/MatIcon";
 import { Notice } from "@/app/components/notice/Notice";
 import { PremiumButton } from "@/app/components/buttons/PremiumButton";
@@ -25,20 +22,20 @@ export default function DashboardPage() {
   const user = useAppSelector(selectCurrentUser);
   const dialogs = useAppSelector<any>((state) => state.dialogs);
   const dispatch = useAppDispatch();
-  const [showDisclaimer, setShowDisclaimer] = useState(false);
+  // const [showDisclaimer, setShowDisclaimer] = useState(true);
 
-  useEffect(() => {
-    const getDisclaimer = localStorage.getItem("disclaimer_acknowledged");
+  // useEffect(() => {
+  //   const getDisclaimer = localStorage.getItem("disclaimer_acknowledged");
 
-    if (!getDisclaimer) {
-      setShowDisclaimer(true);
-    }
-  }, []);
+  //   if (!getDisclaimer) {
+  //     setShowDisclaimer(true);
+  //   }
+  // }, []);
 
-  function acknowledge(): void {
-    localStorage.setItem("disclaimer_acknowledged", "true");
-    setShowDisclaimer(false);
-  }
+  // function acknowledge(): void {
+  //   localStorage.setItem("disclaimer_acknowledged", "true");
+  //   setShowDisclaimer(false);
+  // }
 
   function openCreateBankDialog() {
     dispatch(dialogsAction.openCreateBankDialog());
@@ -102,58 +99,34 @@ export default function DashboardPage() {
           {/* right-hand side */}
           <div className="flex flex-col xl:flex-row gap-4">
             <div className="flex flex-col gap-4">
-              <Notice icon="waving-hand-outline">
-                <span className="text-sm">
-                  Welcome to the new Fun Banking website. Please be sure to
-                  report any bugs via the &quot;Send Feedback&quot; button.
-                </span>
-              </Notice>
               <Card className="flex flex-col gap-2 w-full" type="outlined">
                 <div className="flex items-center justify-between">
                   <h1 className="text-lg">Dashboard</h1>
-                  <Link
-                    className="common text-sm filled-tonal"
-                    href={
-                      "mailto:bytebury@gmail.com?subject=Feedback for Fun Banking"
-                    }
-                  >
-                    Send Feedback
-                  </Link>
                 </div>
                 <section className="flex flex-col gap-2">
                   <p>
-                    This is the dashboard — where you&apos;ll find some
-                    high-level updates about what&apos;s going on in your banks.
-                    Including some informational updates from the Fun Banking
-                    team. Although, we&apos;re still in the middle of developing
-                    it further.
+                    Dit is het dashboard — hier vind je enkele updates op hoog
+                    niveau over wat er gaande is in je banken. Inclusief enkele
+                    informatieve updates van het Fun Banking team. Hoewel we nog
+                    bezig zijn met de verdere ontwikkeling ervan.
                   </p>
                   <p>
-                    You can{" "}
+                    Je kan{" "}
                     <button
                       onClick={openCreateBankDialog}
                       className="inline-block underline text-primary"
                     >
-                      create a bank
+                      een klas aanmaken
                     </button>{" "}
-                    to get started.
+                    om te beginnen.
                   </p>
                 </section>
-              </Card>
-            </div>
-            <div className="flex flex-col gap-4">
-              <Card
-                className="flex flex-col gap-2 w-full xl:w-80"
-                type="outlined"
-              >
-                <h2 className="text-lg font-extrabold">Latest News</h2>
-                <AnnouncementList />
               </Card>
             </div>
           </div>
         </div>
       </main>
-      {showDisclaimer && (
+      {/* {showDisclaimer && (
         <Dialog>
           <header>
             <MatIcon icon="warning-outline" />
@@ -177,7 +150,7 @@ export default function DashboardPage() {
             </button>
           </footer>
         </Dialog>
-      )}
+      )} */}
     </AuthenticatedGuard>
   );
 }
