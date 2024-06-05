@@ -1,11 +1,15 @@
+import { ChangeEvent, useState } from "react";
+import {
+  fetchAccount,
+  selectAccount,
+} from "@/lib/features/accounts/accountsSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+
 import { Dialog } from "@/app/components/dialog/Dialog";
 import { MatIcon } from "@/app/components/icons/MatIcon";
-import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { PATCH } from "@/app/utils/http-client";
-import { fetchAccount, selectAccount } from "@/lib/features/accounts/accountsSlice";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { ChangeEvent, useState } from "react";
+import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 
 export function EditAccountNameDialog() {
   const account = useAppSelector(selectAccount);
@@ -33,7 +37,7 @@ export function EditAccountNameDialog() {
       const data = await response.json();
 
       if (response.ok) {
-        showSnackbar("Successfully updated account information");
+        showSnackbar("Accountgegevens succesvol bijgewerkt");
         dispatch(fetchAccount(account.id));
         close(event);
       } else {
@@ -48,18 +52,18 @@ export function EditAccountNameDialog() {
     <Dialog>
       <header>
         <MatIcon icon="edit-outline" />
-        <h1>Edit Account</h1>
+        <h1>Rekening Bewerken</h1>
       </header>
       <form className="flex flex-col gap-4" onSubmit={submit}>
         <div className="form-field">
-          <label htmlFor="name">Account Name</label>
+          <label htmlFor="name">Rekeningnaam</label>
           <input
             id="name"
             name="name"
             type="text"
             autoFocus
             className="capitalize"
-            placeholder="Account Name"
+            placeholder="Rekeningnaam"
             defaultValue={account?.name ?? ""}
             maxLength={15}
             required
@@ -68,9 +72,9 @@ export function EditAccountNameDialog() {
         </div>
         <footer>
           <button onClick={close} className="common ghost">
-            Cancel
+            Annuleren
           </button>
-          <input type="submit" className="common ghost" value="Save" />
+          <input type="submit" className="common ghost" value="Opslaan" />
         </footer>
       </form>
     </Dialog>
