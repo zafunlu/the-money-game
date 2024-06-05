@@ -1,14 +1,19 @@
 "use client";
 
+import {
+  INVALID_BANK_NAME_MESSAGE,
+  hasErrors,
+  isValidBankName,
+} from "@/app/utils/form-validators";
+
 import { Dialog } from "@/app/components/dialog/Dialog";
 import { MatIcon } from "@/app/components/icons/MatIcon";
-import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
-import { INVALID_BANK_NAME_MESSAGE, hasErrors, isValidBankName } from "@/app/utils/form-validators";
 import { PUT } from "@/app/utils/http-client";
-import { fetchBanks } from "@/lib/features/banks/banksSlice";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
+import { fetchBanks } from "@/lib/features/banks/banksSlice";
 import { useAppDispatch } from "@/lib/hooks";
 import { useRouter } from "next/navigation";
+import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { useState } from "react";
 
 export function CreateBankDialog() {
@@ -47,7 +52,9 @@ export function CreateBankDialog() {
   }
 
   function isInvalid() {
-    return Object.values(formData).some((value) => !value) || hasErrors(formErrors);
+    return (
+      Object.values(formData).some((value) => !value) || hasErrors(formErrors)
+    );
   }
 
   function close() {
@@ -86,17 +93,17 @@ export function CreateBankDialog() {
     <Dialog>
       <header>
         <MatIcon icon="savings-outline" />
-        <h1>Create a Bank</h1>
+        <h1>Maak een nieuwe klas aan</h1>
       </header>
       <main>
         <form className="flex flex-col gap-2" onSubmit={createBank}>
           <div className={`form-field ${formErrors.name && "error"}`}>
-            <label htmlFor="create_bank_form_name">Bank Name</label>
+            <label htmlFor="create_bank_form_name">Klas naam</label>
             <input
               id="create_bank_form_name"
               name="name"
               type="text"
-              placeholder="Bank Name"
+              placeholder="Klas naam"
               onChange={handleChange}
               maxLength={20}
               required
@@ -104,23 +111,28 @@ export function CreateBankDialog() {
             <div className="error-message">{formErrors.name}</div>
           </div>
           <div className={`form-field`}>
-            <label htmlFor="create_bank_form_description">Description</label>
+            <label htmlFor="create_bank_form_description">Beschrijving</label>
             <textarea
               id="create_bank_form_description"
               className="w-full md:w-96 max-h-[200px]"
               name="description"
-              placeholder="Description"
+              placeholder="Beschrijving"
               onChange={handleChange}
               maxLength={255}
               required
             ></textarea>
           </div>
           <footer>
-            <input type="reset" value="Cancel" onClick={close} className="common ghost" />
+            <input
+              type="reset"
+              value="Annuleren"
+              onClick={close}
+              className="common ghost"
+            />
             <input
               type="submit"
               className="common ghost"
-              value="Create Bank"
+              value="Maak een klas aan"
               disabled={isInvalid() || isDisabled}
             />
           </footer>

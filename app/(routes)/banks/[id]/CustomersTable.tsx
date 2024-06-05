@@ -1,20 +1,21 @@
-import { MatIcon } from "@/app/components/icons/MatIcon";
-import PopoverMenu from "@/app/components/popovers/PopoverMenu";
+import React, { useEffect, useState } from "react";
 import {
   customerAction,
   selectCustomers,
   selectCustomersStatus,
 } from "@/lib/features/customers/customerSlice";
-import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import React, { useEffect, useState } from "react";
-import { UpdateCustomerDialog } from "./dialogs/UpdateCustomerDialog";
+
 import { DeleteCustomerDialog } from "./dialogs/DeleteCustomerDialog";
+import { MatIcon } from "@/app/components/icons/MatIcon";
+import PopoverMenu from "@/app/components/popovers/PopoverMenu";
 import { ThunkStatus } from "@/lib/thunk";
 import { TransferMoneyDialog } from "./dialogs/TransferMoneyDialog";
+import { UpdateCustomerDialog } from "./dialogs/UpdateCustomerDialog";
 import { ViewCustomerDialog } from "./dialogs/ViewCustomerDialog";
-import { formatCurrency } from "@/app/utils/formatters";
 import { accountsAction } from "@/lib/features/accounts/accountsSlice";
+import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
+import { formatCurrency } from "@/app/utils/formatters";
 
 type CustomerTableProps = {
   filterValue?: string;
@@ -24,11 +25,15 @@ export function CustomersTable({ filterValue }: CustomerTableProps) {
   const dispatch = useAppDispatch();
   const dialogs = useAppSelector<any>((state) => state.dialogs);
   const customersFromStore = useAppSelector(selectCustomers);
-  const selectedCustomers = useAppSelector((state) => state.customers.selectedCustomers);
+  const selectedCustomers = useAppSelector(
+    (state) => state.customers.selectedCustomers
+  );
   const [customers, setCustomers] = useState(customersFromStore);
   const [filteredCustomers, setFilteredCustomers] = useState(customers);
   const customersStatus = useAppSelector(selectCustomersStatus);
-  const isMultiSelectMode = useAppSelector((state) => state.customers.isMultiSelectEnabled);
+  const isMultiSelectMode = useAppSelector(
+    (state) => state.customers.isMultiSelectEnabled
+  );
 
   useEffect(() => {
     const updatedCustomersFromStore = customersFromStore.map((customer) => {
@@ -48,8 +53,14 @@ export function CustomersTable({ filterValue }: CustomerTableProps) {
   }, [filterValue, customers]);
 
   useEffect(() => {
-    if (!isMultiSelectMode && customers.some((customer) => customer.isSelected)) {
-      const updatedCustomers = customers.map((customer) => ({ ...customer, isSelected: false }));
+    if (
+      !isMultiSelectMode &&
+      customers.some((customer) => customer.isSelected)
+    ) {
+      const updatedCustomers = customers.map((customer) => ({
+        ...customer,
+        isSelected: false,
+      }));
       setCustomers(updatedCustomers);
     }
   }, [isMultiSelectMode, customers]);
@@ -93,7 +104,9 @@ export function CustomersTable({ filterValue }: CustomerTableProps) {
 
   function selectCustomer(customerId: number, isSelected = true): void {
     const updatedCustomers = customers.map((customer) => {
-      return customer.id === customerId ? { ...customer, isSelected } : customer;
+      return customer.id === customerId
+        ? { ...customer, isSelected }
+        : customer;
     });
     setCustomers(updatedCustomers);
   }
@@ -106,13 +119,16 @@ export function CustomersTable({ filterValue }: CustomerTableProps) {
     <>
       <div>
         <div className="grid grid-cols-12 rounded-t-2xl border border-b-0 border-outline bg-gray-100 font-bold text-gray-700 py-2 px-3">
-          <div className="col-span-5">Customer</div>
-          <div className="col-span-7 text-right pr-11">Balance</div>
+          <div className="col-span-5">Leerling</div>
+          <div className="col-span-7 text-right pr-11">Balans</div>
         </div>
         {filteredCustomers.length === 0 ? (
           <div className="rounded-b-2xl border border-outline px-3 py-2 text-gray-600">
             You do not have any customers yet. Would you like to{" "}
-            <button className="inline underline text-primary" onClick={openCreateCustomerDialog}>
+            <button
+              className="inline underline text-primary"
+              onClick={openCreateCustomerDialog}
+            >
               create one
             </button>
             ?
@@ -139,7 +155,9 @@ export function CustomersTable({ filterValue }: CustomerTableProps) {
                     <label
                       htmlFor={`checkbox_select_${customer.id}`}
                       className={
-                        (isMultiSelectMode ? "cursor-pointer " : "cursor-default ") +
+                        (isMultiSelectMode
+                          ? "cursor-pointer "
+                          : "cursor-default ") +
                         (customer.accounts.length > 1 && isMultiSelectMode
                           ? "text-gray-400 cursor-not-allowed"
                           : "")
@@ -148,13 +166,18 @@ export function CustomersTable({ filterValue }: CustomerTableProps) {
                       {customer.first_name} {customer.last_name}
                     </label>
                   </div>
-                  <div className="text-gray-600 text-xs">PIN-{customer.pin}</div>
+                  <div className="text-gray-600 text-xs">
+                    PIN-{customer.pin}
+                  </div>
                 </div>
                 <div className="flex items-center justify-end gap-2 col-span-7 text-right font-bold">
                   <div>
                     <span>
                       {formatCurrency(
-                        customer.accounts.reduce((a: any, b: any) => a + b.balance, 0)
+                        customer.accounts.reduce(
+                          (a: any, b: any) => a + b.balance,
+                          0
+                        )
                       )}
                     </span>
                   </div>
@@ -170,7 +193,9 @@ export function CustomersTable({ filterValue }: CustomerTableProps) {
                         </button>
                       </li>
                       <li>
-                        <button onClick={() => openTransferMoneyDialog(customer)}>
+                        <button
+                          onClick={() => openTransferMoneyDialog(customer)}
+                        >
                           <MatIcon icon="price-change-outline" />
                           Transfer Money
                         </button>

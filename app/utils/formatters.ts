@@ -29,8 +29,8 @@ export const formatMarkdown = (markdown: string): string => {
 
 export const formatCurrency = (
   value: string | number,
-  currency = "USD",
-  locale = "en-US"
+  currency = "EUR",
+  locale = "nl-NL"
 ): string => {
   if (typeof value === "string") {
     value = parseFloat(value);

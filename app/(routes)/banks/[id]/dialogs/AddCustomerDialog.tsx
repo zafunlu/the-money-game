@@ -1,6 +1,3 @@
-import { Dialog } from "@/app/components/dialog/Dialog";
-import { MatIcon } from "@/app/components/icons/MatIcon";
-import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import {
   INVALID_NAME_MESSAGE,
   INVALID_PIN_MESSAGE,
@@ -9,10 +6,14 @@ import {
   isValidPin,
 } from "@/app/utils/form-validators";
 import { POST, PUT } from "@/app/utils/http-client";
-import { selectCurrentBank } from "@/lib/features/banks/banksSlice";
-import { fetchCustomers } from "@/lib/features/customers/customerSlice";
-import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+
+import { Dialog } from "@/app/components/dialog/Dialog";
+import { MatIcon } from "@/app/components/icons/MatIcon";
+import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
+import { fetchCustomers } from "@/lib/features/customers/customerSlice";
+import { selectCurrentBank } from "@/lib/features/banks/banksSlice";
+import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { useState } from "react";
 
 export function AddCustomerDialog() {
@@ -52,7 +53,9 @@ export function AddCustomerDialog() {
     switch (name) {
       case "firstName":
       case "lastName":
-        errors[name] = isValidName(value) ? "" : `Names ${INVALID_NAME_MESSAGE}`;
+        errors[name] = isValidName(value)
+          ? ""
+          : `Names ${INVALID_NAME_MESSAGE}`;
         break;
       case "pin":
         errors[name] = isValidPin(value) ? "" : INVALID_PIN_MESSAGE;
@@ -63,7 +66,9 @@ export function AddCustomerDialog() {
   }
 
   function isInvalid() {
-    return Object.values(formData).some((value) => !value) || hasErrors(formErrors);
+    return (
+      Object.values(formData).some((value) => !value) || hasErrors(formErrors)
+    );
   }
 
   async function createCustomer(event: any) {
@@ -102,12 +107,12 @@ export function AddCustomerDialog() {
     <Dialog>
       <header>
         <MatIcon icon="person-add-outline" />
-        <h1>Add a Customer</h1>
+        <h1>Leerling toevoegen</h1>
       </header>
       <form onSubmit={createCustomer} className="flex flex-col gap-4">
         <main>
           <div className={`form-field ${formErrors.firstName && "error"}`}>
-            <label htmlFor="customerFirstName">First Name</label>
+            <label htmlFor="customerFirstName">Voornaam</label>
             <input
               id="customerFirstName"
               name="firstName"
@@ -121,7 +126,7 @@ export function AddCustomerDialog() {
             <div className="error-message">{formErrors.firstName}</div>
           </div>
           <div className={`form-field ${formErrors.lastName && "error"}`}>
-            <label htmlFor="customerLastName">Last Name</label>
+            <label htmlFor="customerLastName">Achternaam</label>
             <input
               id="customerLastName"
               name="lastName"
@@ -135,7 +140,7 @@ export function AddCustomerDialog() {
             <div className="error-message">{formErrors.lastName}</div>
           </div>
           <div className={`form-field ${formErrors.pin && "error"}`}>
-            <label htmlFor="customerPin">PIN</label>
+            <label htmlFor="customerPin">PIN code</label>
             <input
               id="customerPin"
               name="pin"
@@ -150,10 +155,15 @@ export function AddCustomerDialog() {
           </div>
         </main>
         <footer>
-          <input type="reset" onClick={closeDialog} className="common ghost" value="Cancel" />
+          <input
+            type="reset"
+            onClick={closeDialog}
+            className="common ghost"
+            value="Annuleren"
+          />
           <input
             type="submit"
-            value="Create Customer"
+            value="Leerling toevoegen"
             className="common ghost"
             disabled={isInvalid() || isDisabled}
           />

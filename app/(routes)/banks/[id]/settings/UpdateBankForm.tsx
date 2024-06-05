@@ -1,10 +1,15 @@
 "use client";
 
-import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
-import { INVALID_BANK_NAME_MESSAGE, hasErrors, isValidBankName } from "@/app/utils/form-validators";
-import { PATCH } from "@/app/utils/http-client";
+import {
+  INVALID_BANK_NAME_MESSAGE,
+  hasErrors,
+  isValidBankName,
+} from "@/app/utils/form-validators";
 import { fetchBank, fetchBanks } from "@/lib/features/banks/banksSlice";
+
+import { PATCH } from "@/app/utils/http-client";
 import { useAppDispatch } from "@/lib/hooks";
+import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { useState } from "react";
 
 type UpdateBankFormProps = { bank: any };
@@ -51,7 +56,9 @@ export function UpdateBankForm({ bank }: UpdateBankFormProps) {
   }
 
   function isInvalid() {
-    return Object.values(formData).some((value) => !value) || hasErrors(formErrors);
+    return (
+      Object.values(formData).some((value) => !value) || hasErrors(formErrors)
+    );
   }
 
   async function updateBank(event: any) {
@@ -84,7 +91,7 @@ export function UpdateBankForm({ bank }: UpdateBankFormProps) {
   return (
     <form className="flex flex-col gap-2" onSubmit={updateBank}>
       <div className={`form-field ${formErrors.name && "error"}`}>
-        <label htmlFor="bankName">Name</label>
+        <label htmlFor="bankName">Naam</label>
         <input
           id="bankName"
           name="name"
@@ -97,7 +104,7 @@ export function UpdateBankForm({ bank }: UpdateBankFormProps) {
         <div className="error-message">{formErrors.name}</div>
       </div>
       <div className={`form-field ${formErrors.description && "error"}`}>
-        <label htmlFor="bankDescription">Description</label>
+        <label htmlFor="bankDescription">Beschrijving</label>
         <textarea
           id="bankDescription"
           name="description"
@@ -113,7 +120,7 @@ export function UpdateBankForm({ bank }: UpdateBankFormProps) {
           type="submit"
           className="common filled"
           disabled={isInvalid() || isDisabled}
-          value="Update"
+          value="Bijwerken"
         />
       </div>
     </form>

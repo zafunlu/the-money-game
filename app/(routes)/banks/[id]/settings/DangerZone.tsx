@@ -1,13 +1,14 @@
 "use client";
 
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+
+import { DELETE } from "@/app/utils/http-client";
 import { Dialog } from "@/app/components/dialog/Dialog";
 import { MatIcon } from "@/app/components/icons/MatIcon";
-import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
-import { DELETE } from "@/app/utils/http-client";
-import { fetchBanks } from "@/lib/features/banks/banksSlice";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { fetchBanks } from "@/lib/features/banks/banksSlice";
 import { useRouter } from "next/navigation";
+import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 
 type DangerZoneProps = { bank: any };
 
@@ -51,12 +52,15 @@ export function DangerZone({ bank }: DangerZoneProps) {
       >
         <div>
           <h1>Danger Zone</h1>
-          Anything you do in this section cannot be undone. Make sure that you know what you are
-          doing.
+          Alles wat je in deze sectie doet, kan niet ongedaan worden gemaakt.
+          Zorg ervoor dat je weet wat je doet.
         </div>
         <div>
-          <button onClick={openDeleteBankDialog} className="common filled-error sm">
-            Delete Bank
+          <button
+            onClick={openDeleteBankDialog}
+            className="common filled-error sm"
+          >
+            Klas verwijderen
           </button>
         </div>
       </section>
@@ -64,21 +68,22 @@ export function DangerZone({ bank }: DangerZoneProps) {
         <Dialog>
           <header>
             <MatIcon icon="delete-outline" />
-            <h1>Delete Bank?</h1>
+            <h1>Klas verwijderen?</h1>
           </header>
           <main className="flex flex-col gap-3">
             <p>
-              Deleting this bank will <strong>permanently</strong> delete all associated data with
-              it as well. This includes customers and transactions.
+              Het verwijderen van deze bank zal <strong>permanent</strong> alle
+              bijbehorende gegevens verwijderen. Dit omvat klanten en
+              transacties.
             </p>
-            <p>Are you sure you want to delete {bank.name}?</p>
+            <p>Weet je zeker dat je {bank.name} wilt verwijderen?</p>
           </main>
           <footer>
             <button className="common ghost" onClick={closeDialog}>
-              Cancel
+              Annuleren
             </button>
             <button className="common ghost" onClick={deleteBank}>
-              Delete Bank
+              Klas verwijderen
             </button>
           </footer>
         </Dialog>

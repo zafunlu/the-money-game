@@ -1,7 +1,6 @@
 "use client";
 
-import { Notice } from "@/app/components/notice/Notice";
-import { AuthenticatedGuard } from "@/app/guards/AuthGuard";
+import { Tabs, TabsInfo } from "@/app/components/tabs/Tabs";
 import {
   fetchBank,
   fetchEmployees,
@@ -9,15 +8,17 @@ import {
   selectCurrentBankStatus,
 } from "@/lib/features/banks/banksSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { BankSidebar } from "./BankSidebar";
-import { CopyNotice } from "./CopyNotice";
-import { Card } from "@/app/components/card/Card";
+
+import { AuthenticatedGuard } from "@/app/guards/AuthGuard";
 import { BankHeader } from "./BankHeader";
-import { TabsInfo, Tabs } from "@/app/components/tabs/Tabs";
+import { BankSidebar } from "./BankSidebar";
+import { Card } from "@/app/components/card/Card";
+import { CopyNotice } from "./CopyNotice";
+import { Notice } from "@/app/components/notice/Notice";
 import { ThunkStatus } from "@/lib/thunk";
 import { fetchCustomers } from "@/lib/features/customers/customerSlice";
+import { useParams } from "next/navigation";
 
 type BankLayoutProps = { children: React.ReactNode };
 export default function BankLayout({ children }: BankLayoutProps) {
@@ -37,8 +38,8 @@ export default function BankLayout({ children }: BankLayoutProps) {
 
   useEffect(() => {
     setTabs([
-      { link: `/banks/${params.id}`, displayText: "Customers" },
-      { link: `/banks/${params.id}/settings`, displayText: "Settings" },
+      { link: `/banks/${params.id}`, displayText: "Leerlingen" },
+      { link: `/banks/${params.id}/settings`, displayText: "Instellingen" },
     ]);
   }, [params]);
 

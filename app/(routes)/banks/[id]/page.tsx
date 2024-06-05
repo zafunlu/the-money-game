@@ -1,21 +1,27 @@
 "use client";
 
-import { MatIcon } from "@/app/components/icons/MatIcon";
-import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
+import {
+  customerAction,
+  selectCustomers,
+} from "@/lib/features/customers/customerSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { CustomersTable } from "./CustomersTable";
+
 import { AddCustomerDialog } from "./dialogs/AddCustomerDialog";
-import { customerAction, selectCustomers } from "@/lib/features/customers/customerSlice";
-import { useState } from "react";
-import { Switch } from "@/app/components/switch/Switch";
 import { BulkTransferDialog } from "./dialogs/BulkTransferDialog";
+import { CustomersTable } from "./CustomersTable";
+import { MatIcon } from "@/app/components/icons/MatIcon";
+import { Switch } from "@/app/components/switch/Switch";
+import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
+import { useState } from "react";
 
 export default function BankPage() {
   const dialogs = useAppSelector((state) => state.dialogs);
   const dispatch = useAppDispatch();
   const customers = useAppSelector(selectCustomers);
   const [customerSearch, setCustomerSearch] = useState("");
-  const isCustomerSelectionOn = useAppSelector((state) => state.customers.isMultiSelectEnabled);
+  const isCustomerSelectionOn = useAppSelector(
+    (state) => state.customers.isMultiSelectEnabled
+  );
   const numberOfSelectedCustomers = useAppSelector(
     (state) => Object.keys(state.customers.selectedCustomers).length
   );
@@ -61,7 +67,7 @@ export default function BankPage() {
         <div className="flex justify-end">
           <button onClick={openAddCustomerDialog} className="sm common filled">
             <MatIcon icon="add" />
-            New Customer
+            Nieuwe leerling
           </button>
         </div>
 
@@ -74,7 +80,11 @@ export default function BankPage() {
                 : "justify-start flex-row-reverse"
             }`}
           >
-            <Switch id="okay" onChange={handleSwitch} enabled={isCustomerSelectionOn}>
+            <Switch
+              id="okay"
+              onChange={handleSwitch}
+              enabled={isCustomerSelectionOn}
+            >
               Bulk Transfer
             </Switch>
           </div>

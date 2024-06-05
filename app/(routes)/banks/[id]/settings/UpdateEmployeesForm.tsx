@@ -1,9 +1,10 @@
 "use client";
 
-import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { POST, PUT } from "@/app/utils/http-client";
+
 import { fetchEmployees } from "@/lib/features/banks/banksSlice";
 import { useAppDispatch } from "@/lib/hooks";
+import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { useState } from "react";
 
 type UpdateEmployeesFormProps = { bank: any };
@@ -53,20 +54,25 @@ export function UpdateEmployeesForm({ bank }: UpdateEmployeesFormProps) {
   return (
     <form className="flex flex-col gap-4" onSubmit={addEmployee}>
       <div className="form-field">
-        <label htmlFor="email">Employee E-mail</label>
+        <label htmlFor="email">E-mailadres medewerker</label>
         <input
           id="email"
           name="email"
           type="email"
           onChange={handleChange}
-          placeholder="E-mail of Employee"
+          placeholder="E-mailadres medewerker"
           autoComplete="off"
           required
           value={formData.email}
         />
       </div>
       <div>
-        <input className="common filled" type="submit" value="Add Employee" disabled={isDisabled} />
+        <input
+          className="common filled"
+          type="submit"
+          value="Medewerker toevoegen"
+          disabled={isDisabled}
+        />
       </div>
     </form>
   );

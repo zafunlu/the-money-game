@@ -4,8 +4,8 @@ export function CopyNotice() {
   return (
     <Notice icon="share-windows">
       <span className="text-sm">
-        Click on the button below with the clipboard icon to share the link with your customers. It
-        will automatically copy it to your clipboard.
+        Klik op de link met het icoon hieronder om de link met je leerlingen te
+        delen. De link wordt automatisch naar je klembord gekopieerd.
       </span>
     </Notice>
   );

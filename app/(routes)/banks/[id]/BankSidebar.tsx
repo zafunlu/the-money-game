@@ -1,10 +1,14 @@
-import { Card } from "@/app/components/card/Card";
-import styles from "./BankSidebar.module.scss";
-import { EmployeeList } from "./EmployeeList";
 import { formatCurrency, formatDate } from "@/app/utils/formatters";
+import {
+  selectCustomers,
+  selectTotalBankValue,
+} from "@/lib/features/customers/customerSlice";
+
+import { Card } from "@/app/components/card/Card";
+import { EmployeeList } from "./EmployeeList";
 import { MatIcon } from "@/app/components/icons/MatIcon";
+import styles from "./BankSidebar.module.scss";
 import { useAppSelector } from "@/lib/hooks";
-import { selectCustomers, selectTotalBankValue } from "@/lib/features/customers/customerSlice";
 
 type BankSidebarProps = { bank: any };
 
@@ -24,11 +28,11 @@ export function BankSidebar({ bank }: BankSidebarProps) {
     <aside className={styles.bankSidebar}>
       <Card type="outlined">
         <section>
-          <h1 className="mb-2">Employees</h1>
+          <h1 className="mb-2">Medewerkers</h1>
           <EmployeeList />
         </section>
         <section className={styles.bankInfo}>
-          <h1>Information</h1>
+          <h1>Informatie</h1>
           <ul>
             <li>
               <MatIcon icon="groups-outline" />
