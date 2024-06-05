@@ -1,20 +1,21 @@
 import { Card } from "@/app/components/card/Card";
-import { Metadata } from "next";
 import Link from "next/link";
+import { Metadata } from "next";
 import ResetPasswordForm from "./form";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "Fun Banking | Reset Password",
-  description: "Reset your Fun Banking account password",
+  title: "The Money Game | Wachtwoord resetten",
+  description: "Reset je wachtwoord voor je account bij The Money Game",
 };
+
 export default function ResetPasswordPage() {
   return (
     <main className="container max-w-2xl">
       <Card type="outlined">
-        <h1 className="text-xl">Reset Your Password</h1>
+        <h1 className="text-xl">Reset je wachtwoord</h1>
         <p>
-          Know your password already? <Link href="/signin">Sign in</Link>.
+          Weet je je wachtwoord al? <Link href="/signin">Inloggen</Link>.
         </p>
         <Suspense>
           <ResetPasswordForm />

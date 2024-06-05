@@ -1,21 +1,23 @@
-import { Metadata } from "next";
-import SignInForm from "./form";
 import { Card } from "@/app/components/card/Card";
 import Link from "next/link";
+import { Metadata } from "next";
 import { NonAuthenticatedGuard } from "@/app/guards/NonAuthGuard";
+import SignInForm from "./form";
 
 export const metadata: Metadata = {
-  title: "Fun Banking | Login to your Account",
-  description: "Have an existing account with Fun Banking? Let's sign in.",
+  title: "The Money Game | Inloggen op je account",
+  description: "Heb je al een account bij The Money Game? Log in.",
 };
+
 export default function SignInPage() {
   return (
     <NonAuthenticatedGuard>
       <main className="container max-w-2xl">
         <Card type="outlined">
-          <h1 className="text-xl">Sign in to Fun Banking</h1>
+          <h1 className="text-xl">Inloggen bij The Money Game</h1>
           <p>
-            Need an account? <Link href="signup">Create one</Link>.
+            Heb je een account nodig? <Link href="signup">Maak er een aan</Link>
+            .
           </p>
           <SignInForm />
         </Card>

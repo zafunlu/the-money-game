@@ -12,9 +12,9 @@ import StoreProvider from "./StoreProvider";
 import { script as gtagScript } from "../public/gtag";
 
 export const metadata: Metadata = {
-  title: "Fun Banking | Your Online Banking Simulator",
+  title: "The Money Game | Jouw leeromgeving voor financiële educatie",
   description:
-    "Fun Banking: Experience the Ultimate Online Banking Simulator for Educators, Teachers and Families. Engage in interactive financial education, manage virtual finances, and learn banking skills in a safe, fun environment. Perfect for classrooms and home learning.",
+    "The Money Game: Jouw ultieme leeromgeving voor financiële educatie. Ervaar interactieve financiële lessen, beheer virtuele financiën, en leer bankvaardigheden in een veilige, leuke omgeving. Perfect voor klaslokalen en thuisonderwijs.",
 };
 
 export default function RootLayout({

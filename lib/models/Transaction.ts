@@ -17,7 +17,7 @@ export type Transaction = {
 };
 
 export enum TransactionStatus {
-  Pending = "in afwachting",
-  Declined = "afgewezen",
-  Approved = "goedgekeurd",
+  Pending = "pending",
+  Declined = "declined",
+  Approved = "approved",
 }

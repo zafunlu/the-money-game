@@ -107,8 +107,8 @@ export default function DashboardPage() {
                   <p>
                     Dit is het dashboard — hier vind je enkele updates op hoog
                     niveau over wat er gaande is in je banken. Inclusief enkele
-                    informatieve updates van het Fun Banking team. Hoewel we nog
-                    bezig zijn met de verdere ontwikkeling ervan.
+                    informatieve updates van het The Money Game team. Hoewel we
+                    nog bezig zijn met de verdere ontwikkeling ervan.
                   </p>
                   <p>
                     Je kan{" "}

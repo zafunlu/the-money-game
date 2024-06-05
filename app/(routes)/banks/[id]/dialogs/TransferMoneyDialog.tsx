@@ -1,23 +1,27 @@
 "use client";
 
-import { SegmentedButton } from "@/app/components/buttons/SegmentedButton";
-import { Dialog } from "@/app/components/dialog/Dialog";
-import { MatIcon } from "@/app/components/icons/MatIcon";
-import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
-import { Switch } from "@/app/components/switch/Switch";
-import { useAuth } from "@/app/guards/AuthContext";
 import { AMOUNT_TOO_LARGE, hasErrors } from "@/app/utils/form-validators";
-import { formatCurrency } from "@/app/utils/formatters";
-import { PUT } from "@/app/utils/http-client";
-import { fetchAccount, selectAccount } from "@/lib/features/accounts/accountsSlice";
+import {
+  fetchAccount,
+  selectAccount,
+} from "@/lib/features/accounts/accountsSlice";
 import {
   fetchCustomer,
   fetchCustomers,
   selectCustomer,
 } from "@/lib/features/customers/customerSlice";
-import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useRef, useState } from "react";
+
+import { Dialog } from "@/app/components/dialog/Dialog";
+import { MatIcon } from "@/app/components/icons/MatIcon";
+import { PUT } from "@/app/utils/http-client";
+import { SegmentedButton } from "@/app/components/buttons/SegmentedButton";
+import { Switch } from "@/app/components/switch/Switch";
+import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
+import { formatCurrency } from "@/app/utils/formatters";
+import { useAuth } from "@/app/guards/AuthContext";
+import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 
 export function TransferMoneyDialog() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -71,7 +75,7 @@ export function TransferMoneyDialog() {
         if (amount > 250_000_000) {
           errors.amount = AMOUNT_TOO_LARGE;
         } else if (amount === 0) {
-          errors.amount = "Must be greater than 0";
+          errors.amount = "Moet groter zijn dan 0";
         } else {
           errors.amount = "";
           setFormData({ ...formData, amount: amount.toString() });
@@ -79,7 +83,7 @@ export function TransferMoneyDialog() {
         break;
       case "description":
         if (value.length > 35) {
-          errors.description = "Description can only be 35 characters";
+          errors.description = "Beschrijving mag slechts 35 tekens bevatten";
         }
         break;
     }
@@ -99,7 +103,9 @@ export function TransferMoneyDialog() {
   }
 
   function isInvalid() {
-    return Object.values(formData).some((value) => !value) || hasErrors(formErrors);
+    return (
+      Object.values(formData).some((value) => !value) || hasErrors(formErrors)
+    );
   }
 
   function resetForm(): void {
@@ -137,14 +143,14 @@ export function TransferMoneyDialog() {
             resetForm();
           }
           showSnackbar(
-            `Successfully ${isWithdraw ? "withdrew" : "deposited"} ${formatCurrency(
+            `Succesvol ${isWithdraw ? "opgenomen" : "gestort"} ${formatCurrency(
               parseFloat(formData.amount)
-            )} ${isWithdraw ? "from" : "into"} the account`
+            )} ${isWithdraw ? "van" : "op"} de rekening`
           );
         } else {
           dispatch(fetchCustomer(customer!.id));
           showSnackbar(
-            "Successfully created a request. Please wait while your bank approves or declines this transaction"
+            "Succesvol een verzoek aangemaakt. Wacht alstublieft terwijl uw bank deze transactie goedkeurt of afwijst"
           );
         }
 
@@ -162,9 +168,15 @@ export function TransferMoneyDialog() {
     <Dialog>
       <header>
         <MatIcon icon="price-change-outline" />
-        <h1 className="capitalize">Transfer Request for {customer?.first_name}</h1>
+        <h1 className="capitalize">
+          Overboekingsverzoek voor {customer?.first_name}
+        </h1>
       </header>
-      <form ref={formRef} className="flex flex-col gap-3" onSubmit={createTransfer}>
+      <form
+        ref={formRef}
+        className="flex flex-col gap-3"
+        onSubmit={createTransfer}
+      >
         <main className="flex flex-col gap-2">
           <SegmentedButton>
             <input
@@ -176,7 +188,7 @@ export function TransferMoneyDialog() {
               checked={formData.transactionType === "deposit"}
             />
             <label htmlFor="transaction_type_deposit" className="w-1/2">
-              Deposit
+              Storten
             </label>
             <input
               id="transaction_type_withdraw"
@@ -187,12 +199,12 @@ export function TransferMoneyDialog() {
               checked={formData.transactionType === "withdraw"}
             />
             <label htmlFor="transaction_type_withdraw" className="w-1/2">
-              Withdraw
+              Opnemen
             </label>
           </SegmentedButton>
           {(customer?.accounts.length ?? 1) > 1 && !account && (
             <div className="form-field">
-              <label htmlFor="select_account">Select Account</label>
+              <label htmlFor="select_account">Selecteer Rekening</label>
               <select
                 id="select_account"
                 name="accountId"
@@ -210,7 +222,7 @@ export function TransferMoneyDialog() {
             </div>
           )}
           <div className={`form-field ${formErrors.amount && "error"}`}>
-            <label htmlFor="transfer_money_dialog_amount">Amount</label>
+            <label htmlFor="transfer_money_dialog_amount">Bedrag</label>
             <input
               id="transfer_money_dialog_amount"
               type="text"
@@ -223,13 +235,15 @@ export function TransferMoneyDialog() {
             <div className="error-message">{formErrors.amount}</div>
           </div>
           <div className="form-field">
-            <label htmlFor="transfer_money_dialog_description">Description</label>
+            <label htmlFor="transfer_money_dialog_description">
+              Beschrijving
+            </label>
             <input
               id="transfer_money_dialog_description"
               name="description"
               maxLength={35}
               onChange={handleChange}
-              placeholder="Enter a very short description"
+              placeholder="Voer een korte beschrijving in"
               type="text"
             />
           </div>
@@ -243,7 +257,7 @@ export function TransferMoneyDialog() {
               }}
               enabled={keepOpen}
             >
-              Keep open?
+              Open houden?
             </Switch>
           </div>
         )}
@@ -252,9 +266,14 @@ export function TransferMoneyDialog() {
             type="reset"
             onClick={closeTransferMoneyDialog}
             className="common ghost"
-            value="Cancel"
+            value="Annuleren"
           />
-          <input type="submit" value="Complete" className="common ghost" disabled={isInvalid()} />
+          <input
+            type="submit"
+            value="Voltooien"
+            className="common ghost"
+            disabled={isInvalid()}
+          />
         </footer>
       </form>
     </Dialog>

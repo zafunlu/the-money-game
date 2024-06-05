@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import React from "react";
 import { ThunkStatus } from "@/lib/thunk";
+import { TransactionStatus } from "@/lib/models/Transaction";
 import { selectCustomer } from "@/lib/features/customers/customerSlice";
 
 type RecentTransactionsProps = {
@@ -40,6 +41,19 @@ export function RecentTransactions({ account }: RecentTransactionsProps) {
     setPageNumber((pageNumber) => (pageNumber -= 1));
   }
 
+  function getStatusMessage(status: TransactionStatus) {
+    switch (status) {
+      case TransactionStatus.Pending:
+        return "In afwachting";
+      case TransactionStatus.Declined:
+        return "Afgewezen";
+      case TransactionStatus.Approved:
+        return "Goedgekeurd";
+      default:
+        return status;
+    }
+  }
+
   function getApprovalMessage(transaction: any) {
     if (transaction.type === "bank_buddy") {
       if (transaction.bank_buddy_sender_id === customer?.id) {
@@ -61,7 +75,10 @@ export function RecentTransactions({ account }: RecentTransactionsProps) {
 
     return (
       <>
-        <span className="capitalize">{transaction.status}</span> door{" "}
+        <span className="capitalize">
+          {getStatusMessage(transaction.status)}
+        </span>{" "}
+        door{" "}
         <Link
           href={`/profile/${transaction.user.username}`}
           className="capitalize"

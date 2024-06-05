@@ -59,7 +59,7 @@ export function AccountStatementDocument({
               {bank?.name}
             </Text>
             <Text style={{ fontSize: "10" }}>
-              Door Fun Banking &mdash; Jouw Online Bank Simulatie
+              Door The Money Game &mdash; Jouw Online Bank Simulatie
             </Text>
           </View>
           <View

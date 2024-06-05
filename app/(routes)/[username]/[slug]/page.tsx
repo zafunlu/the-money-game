@@ -1,15 +1,19 @@
 "use client";
 
-import { Card } from "@/app/components/card/Card";
-import { NonAuthenticatedGuard } from "@/app/guards/NonAuthGuard";
-import { CustomerSignInForm } from "./form";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { POST } from "@/app/utils/http-client";
+import {
+  banksAction,
+  selectCurrentBank,
+} from "@/lib/features/banks/banksSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { banksAction, selectCurrentBank } from "@/lib/features/banks/banksSlice";
+import { useEffect, useState } from "react";
+
+import { Card } from "@/app/components/card/Card";
+import { CustomerSignInForm } from "./form";
 import { NoCustomerGuard } from "@/app/guards/NoCustomerGuard";
+import { NonAuthenticatedGuard } from "@/app/guards/NonAuthGuard";
 import { Notice } from "@/app/components/notice/Notice";
+import { POST } from "@/app/utils/http-client";
+import { useParams } from "next/navigation";
 
 export default function BankSignInPage() {
   const { username, slug } = useParams();
@@ -61,8 +65,8 @@ export default function BankSignInPage() {
           <Card className="flex flex-col gap-4" type="outlined">
             <Notice icon="warning-outline">
               <span className="text-sm">
-                Fun Banking is an online banking simulator for educational purposes. Do not enter
-                real bank information.
+                The Money Game is een online bank simulator voor educatieve
+                doeleinden. Voer geen echte bankgegevens in.
               </span>
             </Notice>
             <section>
