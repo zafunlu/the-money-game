@@ -1,14 +1,15 @@
-import { formatCurrency, formatDate } from "@/app/utils/formatters";
 import {
   fetchCompletedTransactions,
   selectCompletedTransactions,
 } from "@/lib/features/accounts/accountsSlice";
-import { selectCustomer } from "@/lib/features/customers/customerSlice";
+import { formatCurrency, formatDate } from "@/app/utils/formatters";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { ThunkStatus } from "@/lib/thunk";
+import { useEffect, useState } from "react";
+
 import Link from "next/link";
 import React from "react";
-import { useEffect, useState } from "react";
+import { ThunkStatus } from "@/lib/thunk";
+import { selectCustomer } from "@/lib/features/customers/customerSlice";
 
 type RecentTransactionsProps = {
   account: any;
@@ -16,14 +17,18 @@ type RecentTransactionsProps = {
 
 export function RecentTransactions({ account }: RecentTransactionsProps) {
   const dispatch = useAppDispatch();
-  const { data: transactions, status } = useAppSelector(selectCompletedTransactions);
+  const { data: transactions, status } = useAppSelector(
+    selectCompletedTransactions
+  );
   const customer = useAppSelector(selectCustomer);
   const [pageNumber, setPageNumber] = useState(1);
   const itemsPerPage = 8;
 
   useEffect(() => {
     if (account) {
-      dispatch(fetchCompletedTransactions({ account, pageNumber, itemsPerPage }));
+      dispatch(
+        fetchCompletedTransactions({ account, pageNumber, itemsPerPage })
+      );
     }
   }, [dispatch, account, pageNumber]);
 
@@ -38,16 +43,17 @@ export function RecentTransactions({ account }: RecentTransactionsProps) {
   function getApprovalMessage(transaction: any) {
     if (transaction.type === "bank_buddy") {
       if (transaction.bank_buddy_sender_id === customer?.id) {
-        return <>Sent via BankBuddy</>;
+        return <>Verzonden via BankBuddy</>;
       }
       if (!transaction.bank_buddy_sender_id) {
-        return <>Sent via BankBuddy via Unknown User</>;
+        return <>Verzonden via BankBuddy door een onbekende gebruiker</>;
       }
       return (
         <>
-          Sent via BankBuddy by{" "}
+          Verzonden via BankBuddy door{" "}
           <span className="capitalize">
-            {transaction.bank_buddy_sender.first_name} {transaction.bank_buddy_sender.last_name}
+            {transaction.bank_buddy_sender.first_name}{" "}
+            {transaction.bank_buddy_sender.last_name}
           </span>
         </>
       );
@@ -55,8 +61,11 @@ export function RecentTransactions({ account }: RecentTransactionsProps) {
 
     return (
       <>
-        <span className="capitalize">{transaction.status}</span> by{" "}
-        <Link href={`/profile/${transaction.user.username}`} className="capitalize">
+        <span className="capitalize">{transaction.status}</span> door{" "}
+        <Link
+          href={`/profile/${transaction.user.username}`}
+          className="capitalize"
+        >
           {transaction.user.first_name} {transaction.user.last_name}
         </Link>
       </>
@@ -64,19 +73,19 @@ export function RecentTransactions({ account }: RecentTransactionsProps) {
   }
 
   if (!transactions.items || status === ThunkStatus.Loading) {
-    return <div>Loading...</div>;
+    return <div>Laden...</div>;
   }
 
   return (
     <>
       <div className="text-left">
         <div className="flex bg-gray-200 border border-outline rounded-t-[10px] px-3 py-2 font-bold">
-          <div>Description</div>
+          <div>Beschrijving</div>
           <div></div>
         </div>
         {transactions.items.length === 0 && (
           <div className="col-span-2 text-left px-3 py-2 bg-white text-gray-500 border border-outline border-t-0 last:rounded-b-[10px]">
-            There have been no completed transactions yet.
+            Er zijn nog geen voltooide transacties.
           </div>
         )}
         {transactions.items.length > 0 &&
@@ -85,14 +94,24 @@ export function RecentTransactions({ account }: RecentTransactionsProps) {
               <div
                 key={transaction.id}
                 className={`flex justify-between bg-white px-3 py-2 border border-outline border-t-0 last-of-type:rounded-b-[10px] last:rounded-b-[10px] items-center hover:bg-slate-50 ${
-                  transaction.status === "declined" ? "line-through text-gray-400" : ""
+                  transaction.status === "declined"
+                    ? "line-through text-gray-400"
+                    : ""
                 }`}
               >
                 <div className="flex flex-col">
-                  <div className={`text-gray-500 text-xs`}>{getApprovalMessage(transaction)}</div>
+                  <div className={`text-gray-500 text-xs`}>
+                    {getApprovalMessage(transaction)}
+                  </div>
                   <p>{transaction.description}</p>
-                  <time className="text-gray-500 text-xs" dateTime={transaction.created_at}>
-                    {formatDate(transaction.created_at, { hour: "numeric", minute: "numeric" })}
+                  <time
+                    className="text-gray-500 text-xs"
+                    dateTime={transaction.created_at}
+                  >
+                    {formatDate(transaction.created_at, {
+                      hour: "numeric",
+                      minute: "numeric",
+                    })}
                   </time>
                 </div>
                 <div className="text-right">
@@ -116,15 +135,19 @@ export function RecentTransactions({ account }: RecentTransactionsProps) {
           })}
       </div>
       <div className="flex justify-between">
-        <button onClick={goToPreviousPage} className="common outlined" disabled={pageNumber === 1}>
-          Previous
+        <button
+          onClick={goToPreviousPage}
+          className="common outlined"
+          disabled={pageNumber === 1}
+        >
+          Vorige
         </button>
         <button
           onClick={goToNextPage}
           className="common outlined"
           disabled={pageNumber * itemsPerPage >= transactions.total_items}
         >
-          Next
+          Volgende
         </button>
       </div>
     </>

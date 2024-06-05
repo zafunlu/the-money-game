@@ -189,7 +189,7 @@ export function CustomersTable({ filterValue }: CustomerTableProps) {
                           className="capitalize"
                         >
                           <MatIcon icon="visibility-outline" />
-                          View {customer.first_name}
+                          Bekijk {customer.first_name}
                         </button>
                       </li>
                       <li>
@@ -197,7 +197,7 @@ export function CustomersTable({ filterValue }: CustomerTableProps) {
                           onClick={() => openTransferMoneyDialog(customer)}
                         >
                           <MatIcon icon="price-change-outline" />
-                          Transfer Money
+                          Maak geld over
                         </button>
                       </li>
                       <li>
@@ -206,7 +206,7 @@ export function CustomersTable({ filterValue }: CustomerTableProps) {
                           className="capitalize"
                         >
                           <MatIcon icon="edit-outline" />
-                          Edit {customer.first_name}
+                          Wijzig {customer.first_name}
                         </button>
                       </li>
                       <hr />
@@ -216,7 +216,7 @@ export function CustomersTable({ filterValue }: CustomerTableProps) {
                           className="capitalize"
                         >
                           <MatIcon icon="delete-outline" />
-                          Delete {customer.first_name}
+                          Verwijder {customer.first_name}
                         </button>
                       </li>
                     </ul>

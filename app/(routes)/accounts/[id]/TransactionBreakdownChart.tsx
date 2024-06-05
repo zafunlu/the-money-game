@@ -1,7 +1,8 @@
-import { BarChart } from "@/app/components/graphs/BarChart";
-import { formatCurrency } from "@/app/utils/formatters";
-import { GET } from "@/app/utils/http-client";
 import { useEffect, useState } from "react";
+
+import { BarChart } from "@/app/components/graphs/BarChart";
+import { GET } from "@/app/utils/http-client";
+import { formatCurrency } from "@/app/utils/formatters";
 
 export function TransactionBreakdownChart({ account }: any) {
   const [monthlyData, setMonthlyData] = useState<any>(null);
@@ -9,7 +10,9 @@ export function TransactionBreakdownChart({ account }: any) {
 
   useEffect(() => {
     const fetchMonthlyData = async () => {
-      const response = await GET(`/accounts/${account.id}/insights/transactions`);
+      const response = await GET(
+        `/accounts/${account.id}/insights/transactions`
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -19,10 +22,16 @@ export function TransactionBreakdownChart({ account }: any) {
           setMonthlyData({
             labels: data.labels.map((label: string) => label.trim()),
             datasets: [
-              { label: "Deposits", data: data.deposits, backgroundColor: "#1d692faa" },
               {
-                label: "Withdrawals",
-                data: data.withdrawals.map((withdraw: number) => Math.abs(withdraw)),
+                label: "Stortingen",
+                data: data.deposits,
+                backgroundColor: "#1d692faa",
+              },
+              {
+                label: "Opnames",
+                data: data.withdrawals.map((withdraw: number) =>
+                  Math.abs(withdraw)
+                ),
                 backgroundColor: "#db97c5aa",
               },
             ],
@@ -39,11 +48,13 @@ export function TransactionBreakdownChart({ account }: any) {
   }, [account, monthlyData]);
 
   if (monthlyData === null) {
-    return <>Crunching numbers...</>;
+    return <>Bezig met berekenen...</>;
   }
 
   if (noMonthlyData) {
-    return <div className="text-gray-500">No data for this month yet.</div>;
+    return (
+      <div className="text-gray-500">Nog geen gegevens voor deze maand.</div>
+    );
   }
 
   return (

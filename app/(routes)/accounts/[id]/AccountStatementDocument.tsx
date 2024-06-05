@@ -1,9 +1,14 @@
-import { formatCurrency } from "@/app/utils/formatters";
-import { GET } from "@/app/utils/http-client";
-import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
 import { useEffect, useState } from "react";
 
-type AccountStatementDocumentProps = { account: any; customer: any; data: any[] };
+import { GET } from "@/app/utils/http-client";
+import { formatCurrency } from "@/app/utils/formatters";
+
+type AccountStatementDocumentProps = {
+  account: any;
+  customer: any;
+  data: any[];
+};
 
 const styles = StyleSheet.create({
   page: {
@@ -48,24 +53,32 @@ export function AccountStatementDocument({
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
           <View style={styles.section}>
-            <Text style={{ fontFamily: "Helvetica-Bold", fontWeight: "extrabold" }}>
+            <Text
+              style={{ fontFamily: "Helvetica-Bold", fontWeight: "extrabold" }}
+            >
               {bank?.name}
             </Text>
             <Text style={{ fontSize: "10" }}>
-              By Fun Banking &mdash; Your Online Banking Simulator
+              Door Fun Banking &mdash; Jouw Online Bank Simulatie
             </Text>
           </View>
-          <View style={[styles.section, { textAlign: "right", paddingRight: 20 }]}>
-            <Text>{account.name} Statement</Text>
-            <Text style={{ fontSize: "10" }}>Account No. {account.id}</Text>
+          <View
+            style={[styles.section, { textAlign: "right", paddingRight: 20 }]}
+          >
+            <Text>{account.name} Afrekening</Text>
+            <Text style={{ fontSize: "10" }}>Rekening Nr. {account.id}</Text>
           </View>
         </View>
         <View style={{ gap: "5px" }}>
           <Text style={{ textTransform: "capitalize" }}>
             {customer.first_name} {customer.last_name}
           </Text>
-          <View style={{ backgroundColor: "#f6f8f1", padding: 5, marginRight: 20 }}>
-            <Text style={{ fontSize: "10" }}>Statement Period for February 2024</Text>
+          <View
+            style={{ backgroundColor: "#f6f8f1", padding: 5, marginRight: 20 }}
+          >
+            <Text style={{ fontSize: "10" }}>
+              Afrekeningsperiode voor februari 2024
+            </Text>
           </View>
         </View>
         <View>
@@ -80,11 +93,11 @@ export function AccountStatementDocument({
               fontSize: "12",
             }}
           >
-            <Text style={{ width: "100" }}>Date</Text>
-            <Text style={{ width: "200" }}>Description</Text>
-            <Text style={{ width: "100" }}>Withdrawals</Text>
-            <Text style={{ width: "100" }}>Deposits</Text>
-            <Text style={{ width: "100" }}>Balance</Text>
+            <Text style={{ width: "100" }}>Datum</Text>
+            <Text style={{ width: "200" }}>Omschrijving</Text>
+            <Text style={{ width: "100" }}>Opnames</Text>
+            <Text style={{ width: "100" }}>Stortingen</Text>
+            <Text style={{ width: "100" }}>Balans</Text>
           </View>
 
           {data.map((records, index) => {
@@ -112,7 +125,9 @@ export function AccountStatementDocument({
                         textOverflow: "ellipsis",
                       }}
                     >
-                      {record.length > 25 ? record.slice(0, 25) + "..." : record}
+                      {record.length > 25
+                        ? record.slice(0, 25) + "..."
+                        : record}
                     </Text>
                   );
                 })}
@@ -129,7 +144,7 @@ export function AccountStatementDocument({
             paddingRight: "20",
           }}
         >
-          <Text style={{ fontSize: "12" }}>**Ending Balance**</Text>
+          <Text style={{ fontSize: "12" }}>**Eindbalans**</Text>
           <Text>{data.at(-1)?.at(-1)}</Text>
         </View>
       </Page>

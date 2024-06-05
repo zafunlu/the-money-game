@@ -1,19 +1,20 @@
 "use client";
 
-import { Dialog } from "@/app/components/dialog/Dialog";
-import { MatIcon } from "@/app/components/icons/MatIcon";
-import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
-import { formatCurrency } from "@/app/utils/formatters";
-import { PUT } from "@/app/utils/http-client";
 import {
   customerAction,
   selectCustomer,
   selectCustomerTotalBalance,
 } from "@/lib/features/customers/customerSlice";
-import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+
+import { Dialog } from "@/app/components/dialog/Dialog";
 import Link from "next/link";
+import { MatIcon } from "@/app/components/icons/MatIcon";
+import { PUT } from "@/app/utils/http-client";
+import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
+import { formatCurrency } from "@/app/utils/formatters";
 import { useRouter } from "next/navigation";
+import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 
 export function ViewCustomerDialog() {
   const dispatch = useAppDispatch();
@@ -29,12 +30,15 @@ export function ViewCustomerDialog() {
 
   async function openAccount(): Promise<void> {
     try {
-      const response = await PUT("/accounts", { name: "Checkings#2", customer_id: customer?.id });
+      const response = await PUT("/accounts", {
+        name: "Betaalaccount#2",
+        customer_id: customer?.id,
+      });
       const data = (await response.json()) as any;
 
       if (response.ok) {
         router.push(`/accounts/${data.id}`);
-        showSnackbar("Successfully opened a new account");
+        showSnackbar("Succesvol een nieuwe rekening geopend");
       } else {
         showSnackbar(data.message);
       }
@@ -54,7 +58,7 @@ export function ViewCustomerDialog() {
           <div className="flex flex-wrap justify-center gap-2">
             <div className="pill bg-tonal border border-outline shrink-0">
               <MatIcon className="w-5 h-5" icon="wallet" />{" "}
-              <strong className="hidden md:inline">Net Worth</strong>{" "}
+              <strong className="hidden md:inline">Netto waarde</strong>{" "}
               {formatCurrency(customersTotalBalance)}
             </div>
             <div className="pill bg-tonal border border-outline">
@@ -66,11 +70,11 @@ export function ViewCustomerDialog() {
       </header>
       <main>
         <section className="flex flex-col gap-3">
-          <h2 className="font-extrabold">Banking</h2>
+          <h2 className="font-extrabold">Bankieren</h2>
           <div>
             <div className="grid grid-cols-2 border border-outline rounded-t-xl px-3 py-1 bg-gray-200 font-bold">
-              <div>Account</div>
-              <div className="text-right">Balance</div>
+              <div>Rekening</div>
+              <div className="text-right">Balans</div>
             </div>
             {customer?.accounts.map((account: any) => {
               return (
@@ -82,7 +86,7 @@ export function ViewCustomerDialog() {
                   <div className="flex gap-2 items-center">
                     {account.name}
                     {account.is_primary && customer.accounts.length > 1 ? (
-                      <div className="pill text-xs bg-tonal">Primary</div>
+                      <div className="pill text-xs bg-tonal">Primair</div>
                     ) : (
                       ""
                     )}
@@ -97,7 +101,7 @@ export function ViewCustomerDialog() {
           {(customer?.accounts.length ?? 5) < 2 && (
             <div>
               <button onClick={openAccount} className="-mt-2 common sm ghost">
-                + Open Account
+                + Rekening openen
               </button>
             </div>
           )}
@@ -105,7 +109,7 @@ export function ViewCustomerDialog() {
       </main>
       <footer>
         <button className="common ghost" onClick={closeDialog}>
-          Close
+          Sluiten
         </button>
       </footer>
     </Dialog>
