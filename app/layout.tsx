@@ -1,15 +1,15 @@
 import "material-icons/iconfont/material-icons.css";
 import "./globals.scss";
-import type { Metadata } from "next";
+
 import { AppBar } from "./components/app-bar/AppBar";
-import { Footer } from "./components/footer/Footer";
-import SnackbarContextProvider from "./components/snackbar/snackbar-context";
 import AuthContextProvider from "./guards/AuthContext";
-import StoreProvider from "./StoreProvider";
 import CustomerAuthContextProvider from "./guards/CustomerAuthContext";
+import type { Metadata } from "next";
 import Script from "next/script";
-import { script as gtagScript } from "../public/gtag";
+import SnackbarContextProvider from "./components/snackbar/snackbar-context";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import StoreProvider from "./StoreProvider";
+import { script as gtagScript } from "../public/gtag";
 
 export const metadata: Metadata = {
   title: "Fun Banking | Your Online Banking Simulator",
@@ -17,7 +17,11 @@ export const metadata: Metadata = {
     "Fun Banking: Experience the Ultimate Online Banking Simulator for Educators, Teachers and Families. Engage in interactive financial education, manage virtual finances, and learn banking skills in a safe, fun environment. Perfect for classrooms and home learning.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <head>
@@ -36,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <AppBar />
                   {children}
                 </div>
-                <Footer></Footer>
+                {/* <Footer></Footer> */}
               </AuthContextProvider>
             </CustomerAuthContextProvider>
           </SnackbarContextProvider>
