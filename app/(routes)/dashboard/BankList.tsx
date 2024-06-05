@@ -1,10 +1,15 @@
 "use client";
 
-import { fetchBanks, selectAllBanks, selectAllBanksStatus } from "@/lib/features/banks/banksSlice";
-import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
+import {
+  fetchBanks,
+  selectAllBanks,
+  selectAllBanksStatus,
+} from "@/lib/features/banks/banksSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { ThunkStatus } from "@/lib/thunk";
+
 import Link from "next/link";
+import { ThunkStatus } from "@/lib/thunk";
+import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useEffect } from "react";
 
 export function BankList() {
@@ -40,9 +45,12 @@ export function BankList() {
   if (banks && banks.length === 0) {
     return (
       <div className="text-gray-600 text-sm">
-        It seems like you don&apos;t have any banks yet. Do you want to{" "}
-        <button onClick={openCreateBankDialog} className="inline text-primary underline">
-          create one
+        Het lijkt erop dat je nog geen banken hebt. Wil je er{" "}
+        <button
+          onClick={openCreateBankDialog}
+          className="inline text-primary underline"
+        >
+          een maken
         </button>
         ?
       </div>
@@ -54,7 +62,10 @@ export function BankList() {
       {banks.map((bank: any) => {
         return (
           <li key={bank.id}>
-            <Link className="flex items-center gap-2 text-sm" href={`/banks/${bank.id}`}>
+            <Link
+              className="flex items-center gap-2 text-sm"
+              href={`/banks/${bank.id}`}
+            >
               {/*eslint-disable-next-line @next/next/no-img-element*/}
               <img
                 alt={bank.owner.username}

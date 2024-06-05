@@ -1,9 +1,9 @@
 "use client";
 
+import Link from "next/link";
+import { SubscriptionTier } from "@/lib/models/User";
 import { selectCurrentUser } from "@/lib/features/users/usersSlice";
 import { useAppSelector } from "@/lib/hooks";
-import { SubscriptionTier } from "@/lib/models/User";
-import Link from "next/link";
 
 export function StoreList() {
   const user = useAppSelector(selectCurrentUser);
@@ -11,10 +11,10 @@ export function StoreList() {
   if (user.subscription_tier < SubscriptionTier.Premium) {
     return (
       <div className="flex flex-col gap-2 text-gray-600 text-sm">
-        This feature is only allowed for premium users.
+        Deze functie is alleen beschikbaar voor premium gebruikers.
         <div>
           <Link className="premium-link" href={"dashboard"}>
-            Upgrade to Premium Today
+            Upgrade vandaag nog naar Premium
           </Link>
         </div>
       </div>
@@ -23,8 +23,8 @@ export function StoreList() {
 
   return (
     <div className="text-gray-600 text-sm">
-      It seems like you don&apos;t have any stores yet. Do you want to{" "}
-      <button className="inline text-primary underline">create one</button>?
+      Het lijkt erop dat je nog geen winkels hebt. Wil je er{" "}
+      <button className="inline text-primary underline">een maken</button>?
     </div>
   );
 }
