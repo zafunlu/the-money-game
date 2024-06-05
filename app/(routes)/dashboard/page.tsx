@@ -52,13 +52,13 @@ export default function DashboardPage() {
               className="flex flex-col gap-4 w-full md:w-72 shrink-0"
             >
               <section className="flex items-center justify-between">
-                <h1>Banks</h1>
+                <h1>Klassen</h1>
                 <button
                   onClick={openCreateBankDialog}
                   className="sm common filled"
                 >
                   <MatIcon icon="add" />
-                  New
+                  Toevoegen
                 </button>
                 {dialogs?.createBank && <CreateBankDialog />}
               </section>
