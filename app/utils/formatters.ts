@@ -15,7 +15,7 @@ export const formatDate = (date: Date | string, dateOptions?: any) => {
   if (typeof date === "string") {
     date = new Date(date);
   }
-  return new Intl.DateTimeFormat("en-US", dateOptions).format(date);
+  return new Intl.DateTimeFormat("nl-NL", dateOptions).format(date);
 };
 
 export const stripHtml = (html: string): string => {

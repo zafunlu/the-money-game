@@ -1,14 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { Card } from "@/app/components/card/Card";
-import { MatIcon } from "@/app/components/icons/MatIcon";
-import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
-import { formatDate } from "@/app/utils/formatters";
-import { GET } from "@/app/utils/http-client";
-import { UserRole } from "@/lib/models/User";
-import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+
+import { Card } from "@/app/components/card/Card";
+import { GET } from "@/app/utils/http-client";
+import { MatIcon } from "@/app/components/icons/MatIcon";
+import { UserRole } from "@/lib/models/User";
+import { formatDate } from "@/app/utils/formatters";
+import { useParams } from "next/navigation";
+import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 
 export default function ProfilePage() {
   const { username } = useParams();
@@ -40,7 +41,7 @@ export default function ProfilePage() {
   if (!user) {
     return (
       <main className="container max-w-xl">
-        <Card type="outlined">Loading...</Card>
+        <Card type="outlined">Laden...</Card>
       </main>
     );
   }
@@ -52,7 +53,7 @@ export default function ProfilePage() {
           <img
             className="absolute -bottom-8 w-32 h-32 rounded-full border-[8px] border-white bg-white"
             src={user.avatar}
-            alt="profile image"
+            alt="profiel afbeelding"
             width={128}
             height={128}
           />
@@ -61,29 +62,35 @@ export default function ProfilePage() {
           <section className="text-center">
             <h1 className="text-2xl capitalize flex gap-2 justify-center items-center">
               {user.first_name} {user.last_name}{" "}
-              {user.verified && <MatIcon className="text-blue-500" icon="verified" />}
+              {user.verified && (
+                <MatIcon className="text-blue-500" icon="verified" />
+              )}
             </h1>
             <div className="text-sm text-gray-500 mb-2">@{user.username}</div>
             <div className="flex gap-2 justify-center">
               {user.role === UserRole.Admin && (
                 <div className="inline-flex gap-1 items-center rounded-[20px] px-3 py-1 bg-pink-600 text-white text-sm">
-                  <MatIcon className="w-5 h-5" icon="admin-panel-settings-outline" />
+                  <MatIcon
+                    className="w-5 h-5"
+                    icon="admin-panel-settings-outline"
+                  />
                   Admin
                 </div>
               )}
               <div className="inline-flex gap-1 items-center rounded-[20px] px-3 py-1 bg-gray-200 text-sm">
                 <MatIcon className="w-5 h-5" icon="calendar-month-outline" />
-                Joined {formatDate(user.created_at)}
+                Lid sinds {formatDate(user.created_at)}
               </div>
             </div>
           </section>
           <section>
-            <h1>About Me</h1>
+            <h1>Over mij</h1>
             {user.about}
             {!user.about && (
               <div className="text-gray-500">
-                Looks like <span className="capitalize">{user.first_name}</span> has not filled this
-                section out yet.
+                Het lijkt erop dat{" "}
+                <span className="capitalize">{user.first_name}</span> deze
+                sectie nog niet heeft ingevuld.
               </div>
             )}
           </section>
